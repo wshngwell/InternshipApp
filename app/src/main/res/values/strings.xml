@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">InternshipApp</string>
+    <string name="enter">Log in</string>
+    <string name="noUserError">Такого пользователя нет</string>
 </resources>

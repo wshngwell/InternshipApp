@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.internshipapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.internshipapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -66,4 +66,21 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+
+    // Koin Core
+    implementation("io.insert-koin:koin-core:3.4.0")
+
+    // Koin Android
+    implementation("io.insert-koin:koin-android:3.4.0")
+
+    // Koin for Jetpack Compose
+    implementation("io.insert-koin:koin-androidx-compose:3.4.0")
+
+    // Koin Test (если нужно тестирование)
+    testImplementation("io.insert-koin:koin-test:3.4.0")
 }
