@@ -2,6 +2,7 @@ package com.example.internshipapp.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,20 +30,38 @@ fun TasksScreen(
             .padding(start = 50.dp, end = 50.dp),
         contentAlignment = Alignment.Center
     ) {
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { navController.myNavigate(Screen.AuthorizationScreen.route) },
-            colors = ButtonColors(
-                containerColor = Color.Magenta,
-                contentColor = Color.White,
-                disabledContainerColor = Color.Gray,
-                disabledContentColor = Color.White,
-            ),
-        ) {
-            Text(
-                fontSize = defaultButtonTextSp,
-                text = "Task1"
-            )
+        Column {
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navController.myNavigate(Screen.AuthorizationScreen.getAuthorizationScreenRoute()) },
+                colors = ButtonColors(
+                    containerColor = Color.Magenta,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+            ) {
+                Text(
+                    fontSize = defaultButtonTextSp,
+                    text = "Task1"
+                )
+            }
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navController.myNavigate(Screen.PostScreen.getPostScreenRoute()) },
+                colors = ButtonColors(
+                    containerColor = Color.Magenta,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+            ) {
+                Text(
+                    fontSize = defaultButtonTextSp,
+                    text = "Task2"
+                )
+            }
         }
+
     }
 }

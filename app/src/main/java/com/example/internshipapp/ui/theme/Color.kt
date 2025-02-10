@@ -9,3 +9,5 @@ val background = Color.Black
 val onBackground = Color.White
 val buttonsColor = Color.Magenta.copy(alpha = 0.5f)
 val disabledButtonsColor = Color.Gray
+val postColor = Color(0xFFD8B1BF)
+val commentColor = Color(0xFF1A4876)

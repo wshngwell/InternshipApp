@@ -1,4 +1,4 @@
-package com.example.internshipapp.presentation
+package com.example.internshipapp.presentation.feature1
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -6,7 +6,9 @@ plugins {
 android {
     namespace = "com.example.internshipapp"
     compileSdk = 35
-
+    buildFeatures {
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "com.example.internshipapp"
         minSdk = 24
@@ -67,6 +69,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.converter)
+    implementation(libs.logging.retrofit)
+
+    implementation(libs.serializable)
+
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
@@ -80,7 +88,10 @@ dependencies {
 
     // Koin for Jetpack Compose
     implementation("io.insert-koin:koin-androidx-compose:3.4.0")
+    implementation("com.andretietz.retrofit:cache-extension:1.0.0")
 
     // Koin Test (если нужно тестирование)
     testImplementation("io.insert-koin:koin-test:3.4.0")
+
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 }

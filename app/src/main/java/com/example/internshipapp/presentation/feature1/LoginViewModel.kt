@@ -1,9 +1,10 @@
-package com.example.internshipapp.presentation
+package com.example.internshipapp.presentation.feature1
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.internshipapp.domain.entities.User
-import com.example.internshipapp.domain.manager.IManager
+import com.example.internshipapp.domain.entities.UserEntity
+import com.example.internshipapp.domain.managers.IManager
+import com.example.internshipapp.presentation.SingleFlowEvent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,11 +16,11 @@ class LoginViewModel(
 ) : ViewModel() {
 
     data class State(
-        val user: User = User("", ""),
+        val userEntity: UserEntity = UserEntity("", ""),
         val isloading: Boolean = false,
 
         ) {
-        var enabledEnterButton: Boolean = user.login.isNotEmpty() && user.password.isNotEmpty()
+        var enabledEnterButton: Boolean = userEntity.login.isNotEmpty() && userEntity.password.isNotEmpty()
     }
 
     private val _state = MutableStateFlow(
@@ -50,7 +51,7 @@ class LoginViewModel(
 
                     _state.update { it.copy(isloading = true) }
                     delay(2000)
-                    if (manager.checkIfUserRegistered(state.value.user)) {
+                    if (manager.checkIfUserRegistered(state.value.userEntity)) {
                         _event.emit(Event.OnLoginSuccess)
                         _state.update {
                             it.copy(isloading = false)
@@ -64,11 +65,11 @@ class LoginViewModel(
                 }
             }
             is Intent.OnLoginTextChange -> {
-                _state.update { it.copy(user = it.user.copy(login = intent.login)) }
+                _state.update { it.copy(userEntity = it.userEntity.copy(login = intent.login)) }
             }
 
             is Intent.OnPasswordTextChange -> {
-                _state.update { it.copy(user = state.value.user.copy(password = intent.password)) }
+                _state.update { it.copy(userEntity = state.value.userEntity.copy(password = intent.password)) }
             }
         }
     }

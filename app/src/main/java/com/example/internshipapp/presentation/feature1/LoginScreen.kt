@@ -1,4 +1,4 @@
-package com.example.internshipapp.presentation
+package com.example.internshipapp.presentation.feature1
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -64,7 +64,7 @@ fun LoginScreen(
                 }
 
                 LoginViewModel.Event.OnLoginSuccess -> {
-                    navController.myNavigate(Screen.AfterAuthorizationScreen.route)
+                    navController.myNavigate(Screen.AfterAuthorizationScreen.getAfterAuthorizationScreenRoute())
                 }
             }
 
@@ -111,7 +111,7 @@ fun UI(
                 modifier = Modifier
                     .padding(start = 20.dp, end = 20.dp)
                     .fillMaxWidth(),
-                value = state.user.login,
+                value = state.userEntity.login,
                 onValueChange = {
                     intent(LoginViewModel.Intent.OnLoginTextChange(it))
                 },
@@ -132,7 +132,7 @@ fun UI(
                     .padding(start = 20.dp, end = 20.dp)
                     .fillMaxWidth()
                     .fillMaxWidth(),
-                value = state.user.password,
+                value = state.userEntity.password,
                 onValueChange = {
                     intent(LoginViewModel.Intent.OnPasswordTextChange(it))
                 },
