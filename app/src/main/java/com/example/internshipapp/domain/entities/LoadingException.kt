@@ -1,15 +1,14 @@
 package com.example.internshipapp.domain.entities
 
-sealed class LoadingException(val msg: String) : Throwable() {
-    data class NetworkError(override val message: String = "Нет интернета") :
-        LoadingException(message)
+sealed class LoadingException : Throwable() {
 
-    data class HttpError(val code: Int, override val message: String) : LoadingException(message)
-    data class NoPostError(override val message: String = "Список постов пустой") :
-        LoadingException(message)
+    data object NetworkError : LoadingException()
 
-    data class NoCommentsError(override val message: String = "Список комментариев пустой") :
-        LoadingException(message)
+    data object HttpError : LoadingException()
 
-    data class OtherError(override val message: String = "Иная ошибка") : LoadingException(message)
+    data object NoPostError : LoadingException()
+
+    data object NoCommentsError : LoadingException()
+
+    data object OtherError : LoadingException()
 }

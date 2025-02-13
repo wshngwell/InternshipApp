@@ -3,6 +3,7 @@ package com.example.internshipapp.presentation.feature2
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.internshipapp.domain.entities.CommentEntity
+import com.example.internshipapp.domain.entities.LoadingException
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.entities.TResult
 import com.example.internshipapp.domain.managers.IPostManager
@@ -27,7 +28,7 @@ class PostWithCommentsViewModel(
     val state = _state.asStateFlow()
 
     sealed interface Event {
-        data class Error(val msg: String) : Event
+        data class Error(val exception: LoadingException) : Event
     }
 
     private val _event = SingleFlowEvent<Event>(viewModelScope)
@@ -40,7 +41,7 @@ class PostWithCommentsViewModel(
             when (tCommentsResult) {
                 is TResult.Error -> _event.emit(
                     Event.Error(
-                        msg = tCommentsResult.exception.message.toString()
+                        exception = tCommentsResult.exception
                     )
                 )
 

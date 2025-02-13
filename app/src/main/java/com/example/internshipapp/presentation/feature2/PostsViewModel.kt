@@ -2,10 +2,12 @@ package com.example.internshipapp.presentation.feature2
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.internshipapp.domain.entities.LoadingException
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.entities.TResult
 import com.example.internshipapp.domain.managers.IPostManager
 import com.example.internshipapp.presentation.SingleFlowEvent
+import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -32,7 +34,7 @@ class PostsViewModel(
 
     sealed interface Event {
         data class OnPostClicked(val postEntity: PostEntity) : Event
-        data class Error(val msg: String) : Event
+        data class Error(val exception: LoadingException) : Event
     }
 
     init {
@@ -41,7 +43,7 @@ class PostsViewModel(
             val tPostResult = manager.getPostsFromNetwork()
             when (tPostResult) {
                 is TResult.Error -> _event.emit(
-                    Event.Error(msg = tPostResult.exception.message.toString())
+                    Event.Error(exception = tPostResult.exception)
 
                 )
 

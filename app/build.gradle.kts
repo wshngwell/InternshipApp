@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-
+    //Android and Compose
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -69,29 +69,28 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //Retrofit
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter)
     implementation(libs.logging.retrofit)
 
+    //Serializable
     implementation(libs.serializable)
 
+    //navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
+    //For collectAsStateWithLifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
 
     // Koin Core
     implementation("io.insert-koin:koin-core:3.4.0")
-
-    // Koin Android
     implementation("io.insert-koin:koin-android:3.4.0")
-
-    // Koin for Jetpack Compose
     implementation("io.insert-koin:koin-androidx-compose:3.4.0")
     implementation("com.andretietz.retrofit:cache-extension:1.0.0")
-
-    // Koin Test (если нужно тестирование)
     testImplementation("io.insert-koin:koin-test:3.4.0")
 
+    //LeakCanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 }

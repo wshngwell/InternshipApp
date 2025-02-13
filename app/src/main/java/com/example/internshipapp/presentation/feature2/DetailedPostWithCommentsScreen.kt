@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.internshipapp.domain.entities.PostEntity
+import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import com.example.internshipapp.ui.theme.headlinesTextSp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
@@ -49,7 +50,7 @@ fun DetailedPostWithCommentsScreen(
                 is PostWithCommentsViewModel.Event.Error -> {
                     Toast.makeText(
                         context,
-                        it.msg,
+                        it.exception.parseLoadingExceptionToStringResource(),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

@@ -2,32 +2,19 @@ package com.example.internshipapp.data.remote
 
 import android.util.Log
 import com.example.internshipapp.domain.entities.LoadingException
+import com.example.internshipapp.myLog
 import retrofit2.HttpException
 import java.io.IOException
 
-fun Throwable.parseToAuthException(): LoadingException = when (this) {
-    is HttpException -> {
-        Log.d("TAG", "$message")
-        LoadingException.HttpError(code = code(), message = message.toString())
-    }
+fun Throwable.parseToAuthException(): LoadingException {
+    myLog(this.stackTraceToString())
+    return when (this) {
+        is HttpException -> LoadingException.HttpError
 
-    is IOException -> {
-        Log.d("TAG", "$message")
-        LoadingException.NetworkError(message = "Не включен интернет")
-    }
+        is IOException -> LoadingException.NetworkError
 
-    is LoadingException.NoPostError -> {
-        Log.d("TAG", "$message")
-        LoadingException.NoPostError()
-    }
+        is LoadingException -> this
 
-    is LoadingException.NoCommentsError -> {
-        Log.d("TAG", "$message")
-        LoadingException.NoCommentsError()
-    }
-
-    else ->{
-        Log.d("TAG", "$message")
-        LoadingException.OtherError()
+        else -> LoadingException.OtherError
     }
 }

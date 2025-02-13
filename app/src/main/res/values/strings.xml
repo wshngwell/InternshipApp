@@ -2,4 +2,9 @@
     <string name="app_name">InternshipApp</string>
     <string name="enter">Log in</string>
     <string name="noUserError">Такого пользователя нет</string>
+    <string name="httpError">Http error</string>
+    <string name="networkError">Нет интернета на устройстве</string>
+    <string name="noCommentsError">Вернулся пустой список комментариев</string>
+    <string name="noPostError">Вернулся пустой список постов</string>
+    <string name="otherError">Другая ошибка</string>
 </resources>

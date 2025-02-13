@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.internshipapp.navigation.Screen
 import com.example.internshipapp.navigation.myNavigate
+import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.androidx.compose.koinViewModel
@@ -59,7 +60,7 @@ fun PostsScreen(
                 is PostsViewModel.Event.Error -> {
                     Toast.makeText(
                         context,
-                        it.msg,
+                        it.exception.parseLoadingExceptionToStringResource(),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

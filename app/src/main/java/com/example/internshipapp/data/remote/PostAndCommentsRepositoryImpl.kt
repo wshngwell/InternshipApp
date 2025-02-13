@@ -21,9 +21,8 @@ class PostAndCommentsRepositoryImpl(
             return@withContext runCatching {
                 val postsList = apiService.loadPosts()
                 val mapPostList = postsList.mapNotNull { it.toPostEntity() }
-                val failedPosts = mapPostList.size - postsList.size
-                if (failedPosts != 0) {
-                    throw LoadingException.NoPostError()
+                if (mapPostList.isEmpty()) {
+                    throw LoadingException.NoPostError
                 }
                 TResult.Success<List<PostEntity>, LoadingException>(
                     data = apiService.loadPosts().mapListOfPostsDtoToListOfPosts()
@@ -43,9 +42,8 @@ class PostAndCommentsRepositoryImpl(
             return@withContext runCatching {
                 val commentsList = apiService.loadComments(postId)
                 val mapResult = commentsList.mapNotNull { it.toCommentEntity() }
-                val failedComments = mapResult.size - commentsList.size
-                if (failedComments != 0) {
-                    throw LoadingException.NoCommentsError()
+                if (mapResult.isEmpty()) {
+                    throw LoadingException.NoCommentsError
                 }
                 TResult.Success<List<CommentEntity>, LoadingException>(
                     data = mapResult

@@ -4,8 +4,10 @@ import android.util.Log
 
 fun myLog(msg: String) {
     if (BuildConfig.DEBUG) {
-        Log.e("Error", msg)
-    } else {
-        println(msg)
+        runCatching {
+            Log.d("Error", msg)
+        }.getOrElse {
+            println(msg)
+        }
     }
 }
