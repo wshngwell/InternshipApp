@@ -1,20 +1,19 @@
 package com.example.internshipapp.data.remote
 
 import com.example.internshipapp.data.mapListOfPostsDtoToListOfPosts
-import com.example.internshipapp.data.toCommentEntity
 import com.example.internshipapp.data.toPostEntity
 import com.example.internshipapp.domain.entities.CommentEntity
 import com.example.internshipapp.domain.entities.LoadingException
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.entities.TResult
-import com.example.internshipapp.domain.repositories.IPostAndCommentsRepository
+import com.example.internshipapp.domain.repositories.IPostAndCommentsRemoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class PostAndCommentsRepositoryImpl(
+class PostAndCommentsRemoteRepositoryImpl(
     private val apiService: ApiService,
-) : IPostAndCommentsRepository {
+) : IPostAndCommentsRemoteRepository {
 
     override suspend fun getPostsFromNetwork(): TResult<List<PostEntity>, LoadingException> =
         withContext(Dispatchers.IO) {
@@ -32,8 +31,6 @@ class PostAndCommentsRepositoryImpl(
                     exception = it.parseToAuthException()
                 )
             }
-
-
         }
 
     override suspend fun getCommentsToPostFromNetwork(postId: Int): TResult<List<CommentEntity>,

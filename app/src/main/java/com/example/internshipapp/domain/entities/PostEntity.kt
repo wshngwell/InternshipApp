@@ -6,4 +6,5 @@ data class PostEntity(
     val id: Int,
     val title: String,
     val userId: Int,
+    val isFavourite: Boolean
 )

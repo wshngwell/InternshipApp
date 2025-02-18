@@ -5,7 +5,7 @@ import android.util.Log
 fun myLog(msg: String) {
     if (BuildConfig.DEBUG) {
         runCatching {
-            Log.d("Error", msg)
+            Log.d("!!!", msg)
         }.getOrElse {
             println(msg)
         }

@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.internshipapp.navigation.Screen
 import com.example.internshipapp.navigation.myNavigate
+import com.example.internshipapp.presentation.feature2.PostsViewModel.Intent
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
@@ -38,7 +39,7 @@ fun PostsScreen(
 ) {
     val viewModel = koinViewModel<PostsViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val intent: (PostsViewModel.Intent) -> Unit by remember {
+    val intent: (Intent) -> Unit by remember {
         mutableStateOf(viewModel::sendIntent)
     }
     val event: Flow<PostsViewModel.Event> by remember {
@@ -79,7 +80,7 @@ fun PostsScreen(
 @Preview
 fun UI(
     state: PostsViewModel.State = PostsViewModel.State(),
-    intent: (PostsViewModel.Intent) -> Unit = {}
+    intent: (Intent) -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -100,10 +101,10 @@ fun UI(
 
         CustomTextField(
             onFilterText = {
-                intent(PostsViewModel.Intent.OnPostFilterTextChanged(state.filterText))
+                intent(Intent.OnPostFilterTextChanged(state.filterText))
             },
             onValueChange = {
-                intent(PostsViewModel.Intent.OnPostFilterTextChanged(it))
+                intent(Intent.OnPostFilterTextChanged(it))
             },
             modifier = Modifier.fillMaxWidth(),
             value = state.filterText
@@ -113,14 +114,12 @@ fun UI(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(state.filteredListOfPostEntities, key = { it.id }) {
-                Post(
+                SwipeablePost(
                     postEntity = it,
-
-                    ) { post ->
-                    intent(PostsViewModel.Intent.PostClicked(post))
-                }
+                    onPostClicked = {intent(Intent.PostClicked(it)) },
+                    onFavouriteClicked = {intent(Intent.FavouriteButtonClicked(it)) }
+                )
             }
         }
-
     }
 }

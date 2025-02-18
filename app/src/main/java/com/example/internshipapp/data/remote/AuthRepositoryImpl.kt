@@ -1,6 +1,6 @@
 package com.example.internshipapp.data.remote
 
-import com.example.internshipapp.data.local.UserDbModel
+import com.example.internshipapp.data.local.dbModels.UserDbModel
 import com.example.internshipapp.domain.entities.UserEntity
 import com.example.internshipapp.domain.repositories.IAuthRepository
 import kotlinx.coroutines.Dispatchers

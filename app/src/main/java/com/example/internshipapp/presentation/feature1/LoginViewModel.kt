@@ -3,7 +3,7 @@ package com.example.internshipapp.presentation.feature1
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.internshipapp.domain.entities.UserEntity
-import com.example.internshipapp.domain.managers.IManager
+import com.example.internshipapp.domain.usecases.AuthUseCase
 import com.example.internshipapp.presentation.SingleFlowEvent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val manager: IManager
+    private val authUseCase: AuthUseCase
 ) : ViewModel() {
 
     data class State(
@@ -20,7 +20,8 @@ class LoginViewModel(
         val isloading: Boolean = false,
 
         ) {
-        var enabledEnterButton: Boolean = userEntity.login.isNotEmpty() && userEntity.password.isNotEmpty()
+        val enabledEnterButton: Boolean =
+            userEntity.login.isNotEmpty() && userEntity.password.isNotEmpty()
     }
 
     private val _state = MutableStateFlow(
@@ -51,7 +52,7 @@ class LoginViewModel(
 
                     _state.update { it.copy(isloading = true) }
                     delay(2000)
-                    if (manager.checkIfUserRegistered(state.value.userEntity)) {
+                    if (authUseCase(state.value.userEntity)) {
                         _event.emit(Event.OnLoginSuccess)
                         _state.update {
                             it.copy(isloading = false)
@@ -64,6 +65,7 @@ class LoginViewModel(
                     }
                 }
             }
+
             is Intent.OnLoginTextChange -> {
                 _state.update { it.copy(userEntity = it.userEntity.copy(login = intent.login)) }
             }

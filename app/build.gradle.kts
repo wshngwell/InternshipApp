@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -83,6 +84,10 @@ dependencies {
 
     //For collectAsStateWithLifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+
+    // room
+    implementation(libs.room.core)
+    ksp(libs.room.compiler)
 
     // Koin Core
     implementation("io.insert-koin:koin-core:3.4.0")

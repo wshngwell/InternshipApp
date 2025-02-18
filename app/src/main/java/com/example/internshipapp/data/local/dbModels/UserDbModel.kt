@@ -1,4 +1,4 @@
-package com.example.internshipapp.data.local
+package com.example.internshipapp.data.local.dbModels
 
 data class UserDbModel(
     val login: String,

@@ -40,6 +40,9 @@ fun DetailedPostWithCommentsScreen(
     val viewModel =
         koinViewModel<PostWithCommentsViewModel>(parameters = { parametersOf(postEntity) })
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val intent: (PostWithCommentsViewModel.Intent) -> Unit by remember {
+        mutableStateOf(viewModel::sendIntent)
+    }
     val event: Flow<PostWithCommentsViewModel.Event> by remember {
         mutableStateOf(viewModel.event)
     }
@@ -59,7 +62,8 @@ fun DetailedPostWithCommentsScreen(
     }
 
     UI(
-        state = state
+        state = state,
+        intent = intent
     )
 
 }
@@ -69,12 +73,14 @@ fun DetailedPostWithCommentsScreen(
 fun UI(
     state: PostWithCommentsViewModel.State = PostWithCommentsViewModel.State(
         postEntity = PostEntity(
-            body = "",
-            id = 1,
-            title = "",
-            1
+            body = "body",
+            id = 0,
+            title = "title",
+            userId = -1,
+            isFavourite = false
         )
     ),
+    intent: (PostWithCommentsViewModel.Intent) -> Unit = {},
 ) {
     Box(
         modifier = Modifier
@@ -106,7 +112,12 @@ fun UI(
                 )
             }
             item {
-                Post(postEntity = state.postEntity)
+                Post(
+                    postEntity = state.postEntity,
+                    onFavouriteClicked = {
+                        intent(PostWithCommentsViewModel.Intent.OnFavouriteClicked(state.postEntity))
+                    }
+                )
             }
             item {
                 Text(
