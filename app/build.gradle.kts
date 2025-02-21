@@ -2,9 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
+    id("androidx.room")
 }
 
 android {
+
     namespace = "com.example.internshipapp"
     compileSdk = 35
     buildFeatures {
@@ -22,7 +24,6 @@ android {
             useSupportLibrary = true
         }
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -31,6 +32,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -50,6 +54,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
 }
 
 dependencies {

@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.internshipapp.data.local.dbModels.PostDbModel
 
-@androidx.room.Database(entities = [PostDbModel::class], version = 1, exportSchema = false)
+@androidx.room.Database(entities = [PostDbModel::class], version = 1, exportSchema = true)
 abstract class PostsDatabase : RoomDatabase() {
 
     abstract fun getPostsDao(): PostsDao
