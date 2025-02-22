@@ -105,9 +105,6 @@ val appModule = module {
     single<PostsDao> {
         PostsDatabase.getInstance(application = androidApplication()).getPostsDao()
     }
-    single<ConsumersDao> {
-        PostsDatabase.getInstance(application = androidApplication()).getConsumersDao()
-    }
     single<ApiService> {
         ApiFactory.apiService(application = androidApplication())
     }

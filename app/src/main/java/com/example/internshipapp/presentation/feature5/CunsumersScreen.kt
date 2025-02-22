@@ -35,16 +35,13 @@ fun ConsumersScreen(
     navController: NavController
 ) {
 
-    val viewModel = koinViewModel<ConsumersViewModel>()
-    val state by viewModel.state.collectAsStateWithLifecycle()
+  /*  //val viewModel = koinViewModel<ConsumersViewModel>()
+    //val state by viewModel.state.collectAsStateWithLifecycle()
 
     val intent: (Intent) -> Unit by remember {
         mutableStateOf(viewModel::sendIntent)
-    }
-    UI(
-        state = state,
-        intent = intent
-    )
+    }*/
+    UI()
 
 
 }

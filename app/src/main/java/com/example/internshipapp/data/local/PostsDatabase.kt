@@ -3,6 +3,7 @@ package com.example.internshipapp.data.local
 import android.app.Application
 import androidx.room.AutoMigration
 import androidx.room.DeleteColumn
+import androidx.room.DeleteTable
 import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -12,8 +13,8 @@ import com.example.internshipapp.data.local.dbModels.ConsumersDao
 import com.example.internshipapp.data.local.dbModels.PostDbModel
 
 @androidx.room.Database(
-    entities = [PostDbModel::class, ConsumerDbModel::class],
-    version = 5,
+    entities = [PostDbModel::class],
+    version = 6,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(
@@ -29,7 +30,13 @@ import com.example.internshipapp.data.local.dbModels.PostDbModel
             from = 4,
             to = 5,
             spec = PostsDatabase.AutoMigrationFrom4To5::class
-        )
+        ),
+        AutoMigration(
+            from = 5,
+            to = 6,
+            spec = PostsDatabase.AutoMigrationFrom5To6::class
+        ),
+
     ]
 
 )
@@ -37,7 +44,7 @@ abstract class PostsDatabase : RoomDatabase() {
 
     abstract fun getPostsDao(): PostsDao
 
-    abstract fun getConsumersDao(): ConsumersDao
+    // abstract fun getConsumersDao(): ConsumersDao
 
     @DeleteColumn.Entries(
         DeleteColumn(
@@ -49,6 +56,9 @@ abstract class PostsDatabase : RoomDatabase() {
 
     @RenameColumn(tableName = "Consumer_table", fromColumnName = "B", toColumnName = "W")
     class AutoMigrationFrom4To5 : AutoMigrationSpec
+
+    @DeleteTable(tableName = "Consumer_table")
+    class AutoMigrationFrom5To6 : AutoMigrationSpec
 
     companion object {
 
