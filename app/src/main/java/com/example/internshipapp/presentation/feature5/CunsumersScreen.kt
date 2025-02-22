@@ -90,7 +90,7 @@ private fun UI(
 private fun ConsumerCard(
     consumerDbModel: ConsumerDbModel = ConsumerDbModel(
         id = 0,
-        B = "BBBBB",
+        W = "WWWWW",
         C = "CCCCC",
         D = "DDDDD"
     ),
@@ -117,7 +117,7 @@ private fun ConsumerCard(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = consumerDbModel.B+ " " + consumerDbModel.id,
+                    text = consumerDbModel.W+ " " + consumerDbModel.id,
                 )
                 Text(
                     text = consumerDbModel.C+ " " + consumerDbModel.id,

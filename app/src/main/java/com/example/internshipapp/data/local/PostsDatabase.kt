@@ -3,6 +3,7 @@ package com.example.internshipapp.data.local
 import android.app.Application
 import androidx.room.AutoMigration
 import androidx.room.DeleteColumn
+import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
@@ -12,7 +13,7 @@ import com.example.internshipapp.data.local.dbModels.PostDbModel
 
 @androidx.room.Database(
     entities = [PostDbModel::class, ConsumerDbModel::class],
-    version = 4,
+    version = 5,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(
@@ -23,6 +24,11 @@ import com.example.internshipapp.data.local.dbModels.PostDbModel
             from = 3,
             to = 4,
             spec = PostsDatabase.AutoMigrationFrom3To4::class
+        ),
+        AutoMigration(
+            from = 4,
+            to = 5,
+            spec = PostsDatabase.AutoMigrationFrom4To5::class
         )
     ]
 
@@ -40,6 +46,9 @@ abstract class PostsDatabase : RoomDatabase() {
         )
     )
     class AutoMigrationFrom3To4 : AutoMigrationSpec
+
+    @RenameColumn(tableName = "Consumer_table", fromColumnName = "B", toColumnName = "W")
+    class AutoMigrationFrom4To5 : AutoMigrationSpec
 
     companion object {
 
