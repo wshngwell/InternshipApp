@@ -78,7 +78,7 @@ fun PostsScreen(
 
 @Composable
 @Preview
-fun UI(
+private fun UI(
     state: PostsViewModel.State = PostsViewModel.State(),
     intent: (Intent) -> Unit = {}
 ) {

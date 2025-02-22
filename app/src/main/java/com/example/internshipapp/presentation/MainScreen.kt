@@ -15,6 +15,7 @@ import com.example.internshipapp.presentation.feature1.AfterAuthorizationScreen
 import com.example.internshipapp.presentation.feature1.LoginScreen
 import com.example.internshipapp.presentation.feature2.DetailedPostWithCommentsScreen
 import com.example.internshipapp.presentation.feature2.PostsScreen
+import com.example.internshipapp.presentation.feature5.ConsumersScreen
 import com.google.gson.Gson
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -44,6 +45,11 @@ fun MainScreen() {
             route = Screen.PostScreen.route
         ) {
             PostsScreen(navController = navController)
+        }
+        composable(
+            route = Screen.ConsumersScreen.route,
+        ) {
+            ConsumersScreen(navController = navController)
         }
         composable(
             route = Screen.DetailedPostScreenWithComments.route,

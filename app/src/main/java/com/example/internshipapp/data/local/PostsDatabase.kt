@@ -1,14 +1,30 @@
 package com.example.internshipapp.data.local
 
 import android.app.Application
+import androidx.room.AutoMigration
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.internshipapp.data.local.dbModels.ConsumerDbModel
+import com.example.internshipapp.data.local.dbModels.ConsumersDao
 import com.example.internshipapp.data.local.dbModels.PostDbModel
 
-@androidx.room.Database(entities = [PostDbModel::class], version = 1, exportSchema = true)
+@androidx.room.Database(
+    entities = [PostDbModel::class, ConsumerDbModel::class],
+    version = 2,
+    exportSchema = true,
+    autoMigrations =[
+        AutoMigration(
+            from = 1,
+            to = 2
+        )
+    ]
+
+)
 abstract class PostsDatabase : RoomDatabase() {
 
     abstract fun getPostsDao(): PostsDao
+
+    abstract fun getConsumersDao(): ConsumersDao
 
     companion object {
 

@@ -61,6 +61,22 @@ fun TasksScreen(
                     text = "Task2"
                 )
             }
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navController.myNavigate(Screen.ConsumersScreen.getConsumersScreenRoute()) },
+                colors = ButtonColors(
+                    containerColor = Color.Magenta,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+            ) {
+                Text(
+                    fontSize = defaultButtonTextSp,
+                    text = "ConsumersList"
+                )
+            }
+
         }
 
     }

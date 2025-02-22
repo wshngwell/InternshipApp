@@ -1,14 +1,17 @@
 package com.example.internshipapp.di
 
+import com.example.internshipapp.data.local.ConsumersRepositoryImpl
 import com.example.internshipapp.data.local.PostLocalRepository
 import com.example.internshipapp.data.local.PostsDao
 import com.example.internshipapp.data.local.PostsDatabase
+import com.example.internshipapp.data.local.dbModels.ConsumersDao
 import com.example.internshipapp.data.remote.ApiFactory
 import com.example.internshipapp.data.remote.ApiService
 import com.example.internshipapp.data.remote.AuthRepositoryImpl
 import com.example.internshipapp.data.remote.PostAndCommentsRemoteRepositoryImpl
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.repositories.IAuthRepository
+import com.example.internshipapp.domain.repositories.IConsumersRepository
 import com.example.internshipapp.domain.repositories.ILocalPostRepository
 import com.example.internshipapp.domain.repositories.IPostAndCommentsRemoteRepository
 import com.example.internshipapp.domain.usecases.AuthUseCase
@@ -20,6 +23,7 @@ import com.example.internshipapp.domain.usecases.GetFavouritePostsUseCase
 import com.example.internshipapp.presentation.feature1.LoginViewModel
 import com.example.internshipapp.presentation.feature2.PostWithCommentsViewModel
 import com.example.internshipapp.presentation.feature2.PostsViewModel
+import com.example.internshipapp.presentation.feature5.ConsumersViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -66,6 +70,11 @@ val appModule = module {
     single<IPostAndCommentsRemoteRepository> {
         PostAndCommentsRemoteRepositoryImpl(apiService = get<ApiService>())
     }
+    single<IConsumersRepository> {
+        ConsumersRepositoryImpl(
+            consumersDao = get<ConsumersDao>()
+        )
+    }
 
     viewModel<LoginViewModel> {
         LoginViewModel(authUseCase = get<AuthUseCase>())
@@ -88,8 +97,16 @@ val appModule = module {
 
         )
     }
+    viewModel<ConsumersViewModel> {
+        ConsumersViewModel(
+            iConsumersRepository = get<IConsumersRepository>()
+        )
+    }
     single<PostsDao> {
         PostsDatabase.getInstance(application = androidApplication()).getPostsDao()
+    }
+    single<ConsumersDao> {
+        PostsDatabase.getInstance(application = androidApplication()).getConsumersDao()
     }
     single<ApiService> {
         ApiFactory.apiService(application = androidApplication())

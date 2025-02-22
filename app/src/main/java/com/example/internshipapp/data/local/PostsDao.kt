@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.internshipapp.data.local.dbModels.ConsumerDbModel
 import com.example.internshipapp.data.local.dbModels.PostDbModel
 import kotlinx.coroutines.flow.Flow
 

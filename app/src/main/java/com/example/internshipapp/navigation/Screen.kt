@@ -22,6 +22,10 @@ sealed class Screen(val route: String) {
         fun getPostScreenRoute(): String = route
     }
 
+    data object ConsumersScreen : Screen(CONSUMERS_SCREEN) {
+        fun getConsumersScreenRoute(): String = route
+    }
+
     data object DetailedPostScreenWithComments :
         Screen(DETAILED_POST_SCREEN_WITH_COMMENTS_WITH_ARGS) {
 
@@ -36,6 +40,7 @@ sealed class Screen(val route: String) {
         private const val TASKS_SCREEN = "TASKS_SCREEN"
         private const val AUTHORIZATION_SCREEN = "AUTHORIZATION_SCREEN"
         private const val AFTER_AUTHORIZATION_SCREEN = "AFTER_AUTHORIZATION_SCREEN"
+        private const val CONSUMERS_SCREEN = "CONSUMERS_SCREEN"
         private const val POST_SCREEN = "POST_SCREEN"
 
         const val KEY_POST = "post_id"
