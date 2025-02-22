@@ -42,7 +42,6 @@ class ConsumersViewModel(
                     iConsumersRepository.addConsumerToDb(
                         consumerDbModel = ConsumerDbModel(
                             id = 0,
-                            A = "A",
                             B = "B",
                             C = "C",
                             D = "D"

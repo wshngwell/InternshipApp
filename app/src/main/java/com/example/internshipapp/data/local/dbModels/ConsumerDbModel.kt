@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey
 data class ConsumerDbModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val A: String,
     val B: String,
     val C: String,
     @ColumnInfo(defaultValue = "D")
