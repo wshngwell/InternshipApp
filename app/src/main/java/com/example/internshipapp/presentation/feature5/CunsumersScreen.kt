@@ -72,7 +72,7 @@ private fun UI(
         }
 
         LazyColumn(
-            modifier = Modifier.padding(top = 60.dp),
+            modifier = Modifier.padding(top = 75.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(items = state.consumersList, key = { it.id }) {
@@ -92,7 +92,8 @@ private fun ConsumerCard(
         id = 0,
         A = "AAAAA",
         B = "BBBBB",
-        C = "CCCCC"
+        C = "CCCCC",
+        D = "DDDDD"
     ),
     intent: (Intent) -> Unit = {}
 ) {
@@ -117,13 +118,16 @@ private fun ConsumerCard(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = consumerDbModel.A,
+                    text = consumerDbModel.A + " " + consumerDbModel.id,
                 )
                 Text(
-                    text = consumerDbModel.B,
+                    text = consumerDbModel.B+ " " + consumerDbModel.id,
                 )
                 Text(
-                    text = consumerDbModel.C,
+                    text = consumerDbModel.C+ " " + consumerDbModel.id,
+                )
+                Text(
+                    text = consumerDbModel.D+ " " + consumerDbModel.id,
                 )
             }
 

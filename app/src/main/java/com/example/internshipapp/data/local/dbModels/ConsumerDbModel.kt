@@ -10,5 +10,7 @@ data class ConsumerDbModel(
     val id: Int = 0,
     val A: String,
     val B: String,
-    val C: String
+    val C: String,
+    @ColumnInfo(defaultValue = "D")
+    val D: String
 )

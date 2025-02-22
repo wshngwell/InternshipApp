@@ -44,7 +44,8 @@ class ConsumersViewModel(
                             id = 0,
                             A = "A",
                             B = "B",
-                            C = "C"
+                            C = "C",
+                            D = "D"
                         )
                     )
                 }

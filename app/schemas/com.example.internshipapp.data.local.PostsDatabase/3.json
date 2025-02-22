@@ -1,0 +1,103 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "18c39814eab316d2c9062408e5df4c2c",
+    "entities": [
+      {
+        "tableName": "PostDbModel_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`body` TEXT NOT NULL, `id` INTEGER NOT NULL, `title` TEXT NOT NULL, `userId` INTEGER NOT NULL, `timeOfInsertion` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "body",
+            "columnName": "body",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeOfInsertion",
+            "columnName": "timeOfInsertion",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Consumer_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `A` TEXT NOT NULL, `B` TEXT NOT NULL, `C` TEXT NOT NULL, `D` TEXT NOT NULL DEFAULT 'D')",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "A",
+            "columnName": "A",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "B",
+            "columnName": "B",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "C",
+            "columnName": "C",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "D",
+            "columnName": "D",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'D'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '18c39814eab316d2c9062408e5df4c2c')"
+    ]
+  }
+}
