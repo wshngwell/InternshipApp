@@ -7,19 +7,23 @@ import com.example.internshipapp.data.remote.ApiFactory
 import com.example.internshipapp.data.remote.ApiService
 import com.example.internshipapp.data.remote.AuthRepositoryImpl
 import com.example.internshipapp.data.remote.PostAndCommentsRemoteRepositoryImpl
+import com.example.internshipapp.data.remote.feature6.PaginationRepository
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.repositories.IAuthRepository
 import com.example.internshipapp.domain.repositories.ILocalPostRepository
+import com.example.internshipapp.domain.repositories.IPaginationRepository
 import com.example.internshipapp.domain.repositories.IPostAndCommentsRemoteRepository
 import com.example.internshipapp.domain.usecases.AuthUseCase
 import com.example.internshipapp.domain.usecases.GetCommentsUseCase
 import com.example.internshipapp.domain.usecases.GetPostsFromNetworkUseCase
 import com.example.internshipapp.domain.usecases.AddPostToFavouriteUseCase
 import com.example.internshipapp.domain.usecases.DeletePostsFromFavouriteUseCase
+import com.example.internshipapp.domain.usecases.GetDataFromPaginationTaskUseCase
 import com.example.internshipapp.domain.usecases.GetFavouritePostsUseCase
 import com.example.internshipapp.presentation.feature1.LoginViewModel
 import com.example.internshipapp.presentation.feature2.PostWithCommentsViewModel
 import com.example.internshipapp.presentation.feature2.PostsViewModel
+import com.example.internshipapp.presentation.feature6.PaginationViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -27,6 +31,12 @@ import org.koin.dsl.module
 
 val appModule = module {
     //useCases
+
+    factory<GetDataFromPaginationTaskUseCase> {
+        GetDataFromPaginationTaskUseCase(
+            iPaginationRepository = get<IPaginationRepository>()
+        )
+    }
     factory<AuthUseCase> {
         AuthUseCase(repository = get<IAuthRepository>())
     }
@@ -60,13 +70,20 @@ val appModule = module {
     single<IAuthRepository> {
         AuthRepositoryImpl()
     }
+    single<IPaginationRepository> {
+        PaginationRepository()
+    }
     single<ILocalPostRepository> {
         PostLocalRepository(postsDao = get<PostsDao>())
     }
     single<IPostAndCommentsRemoteRepository> {
         PostAndCommentsRemoteRepositoryImpl(apiService = get<ApiService>())
     }
-
+    viewModel<PaginationViewModel> {
+        PaginationViewModel(
+            getDataFromPaginationTaskUseCase = get<GetDataFromPaginationTaskUseCase>()
+        )
+    }
     viewModel<LoginViewModel> {
         LoginViewModel(authUseCase = get<AuthUseCase>())
     }
