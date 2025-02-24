@@ -25,6 +25,7 @@ class PaginationViewModel(
         val dataList: List<String> = listOf(),
         val currentPage: Int = 1,
         val maxPages: Int = 1,
+        val firstElementOfLastLoadedList: String = "",
         val isLoading: Boolean = false,
         val shouldBeLoadAgain: Boolean = true
     )
@@ -36,6 +37,11 @@ class PaginationViewModel(
 
     sealed interface Event {}
 
+    init {
+        viewModelScope.launch {
+            loadDataWithCurrentPage()
+        }
+    }
 
     private suspend fun loadDataWithCurrentPage() {
 
@@ -50,6 +56,7 @@ class PaginationViewModel(
                 _state.update {
                     it.copy(
                         dataList = it.dataList + myDataPageEntity.data,
+                        firstElementOfLastLoadedList = myDataPageEntity.data[0],
                         maxPages = myDataPageEntity.maxPage,
                         currentPage = it.currentPage + 1,
                         shouldBeLoadAgain = false,
@@ -63,7 +70,7 @@ class PaginationViewModel(
     fun sendIntent(intent: Intent) {
         when (intent) {
             Intent.OnLoadNextPage -> {
-                if (!state.value.isLoading){
+                if (!state.value.isLoading) {
                     _state.update { it.copy(shouldBeLoadAgain = true) }
                     viewModelScope.launch {
                         loadDataWithCurrentPage()

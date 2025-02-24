@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.internshipapp.presentation.feature6.PaginationViewModel.Intent
@@ -71,12 +70,13 @@ private fun UI(
                         .padding(top = 60.dp)
                         .background(Color.Red)
                 )
-            }
-            item {
-                LaunchedEffect(Unit) {
-                    intent(Intent.OnLoadNextPage)
+                if (it == state.firstElementOfLastLoadedList) {
+                    LaunchedEffect(Unit) {
+                        intent(Intent.OnLoadNextPage)
+                    }
                 }
             }
+
             item {
                 if (state.isLoading) {
                     Box(
