@@ -93,6 +93,21 @@ fun TasksScreen(
                     text = "PaginationTask"
                 )
             }
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navController.myNavigate(Screen.TwoBoxesTaskScreen.getTwoBoxesTaskScreenRoute()) },
+                colors = ButtonColors(
+                    containerColor = Color.Magenta,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+            ) {
+                Text(
+                    fontSize = defaultButtonTextSp,
+                    text = "TwoBoxesTask"
+                )
+            }
         }
 
     }

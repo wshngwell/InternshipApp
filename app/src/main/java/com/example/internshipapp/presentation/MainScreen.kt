@@ -17,6 +17,7 @@ import com.example.internshipapp.presentation.feature2.DetailedPostWithCommentsS
 import com.example.internshipapp.presentation.feature2.PostsScreen
 import com.example.internshipapp.presentation.feature5.ConsumersScreen
 import com.example.internshipapp.presentation.feature6.PaginationScreen
+import com.example.internshipapp.presentation.feature7.TwoBoxesTask
 import com.google.gson.Gson
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -56,6 +57,11 @@ fun MainScreen() {
             route = Screen.PaginationScreen.route
         ) {
             PaginationScreen(navController = navController)
+        }
+        composable(
+            route = Screen.TwoBoxesTaskScreen.route
+        ) {
+            TwoBoxesTask()
         }
 
         composable(
