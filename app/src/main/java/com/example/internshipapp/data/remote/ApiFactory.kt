@@ -1,9 +1,7 @@
 package com.example.internshipapp.data.remote
 
 import android.app.Application
-import com.andretietz.retrofit.responseCache
 import com.example.internshipapp.data.remote.OkhttpCache.setOkhttpCache
-import okhttp3.Cache
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

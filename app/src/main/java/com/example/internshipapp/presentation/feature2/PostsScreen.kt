@@ -23,19 +23,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import com.example.internshipapp.navigation.Screen
-import com.example.internshipapp.navigation.myNavigate
+import com.example.internshipapp.presentation.destinations.DetailedPostWithCommentsScreenDestination
 import com.example.internshipapp.presentation.feature2.PostsViewModel.Intent
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.androidx.compose.koinViewModel
 
-
+@RootNavGraph
+@Destination
 @Composable
 fun PostsScreen(
-    navController: NavController
+    navigator: DestinationsNavigator
 ) {
     val viewModel = koinViewModel<PostsViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -51,8 +53,8 @@ fun PostsScreen(
         event.filterIsInstance<PostsViewModel.Event>().collect {
             when (it) {
                 is PostsViewModel.Event.OnPostClicked -> {
-                    navController.myNavigate(
-                        route = Screen.DetailedPostScreenWithComments.getRouteWithPost(
+                    navigator.navigate(
+                        DetailedPostWithCommentsScreenDestination(
                             it.postEntity
                         )
                     )
@@ -116,8 +118,8 @@ private fun UI(
             items(state.filteredListOfPostEntities, key = { it.id }) {
                 SwipeablePost(
                     postEntity = it,
-                    onPostClicked = {intent(Intent.PostClicked(it)) },
-                    onFavouriteClicked = {intent(Intent.FavouriteButtonClicked(it)) }
+                    onPostClicked = { intent(Intent.PostClicked(it)) },
+                    onFavouriteClicked = { intent(Intent.FavouriteButtonClicked(it)) }
                 )
             }
         }

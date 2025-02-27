@@ -8,8 +8,6 @@ import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
-import com.example.internshipapp.data.local.dbModels.ConsumerDbModel
-import com.example.internshipapp.data.local.dbModels.ConsumersDao
 import com.example.internshipapp.data.local.dbModels.PostDbModel
 
 @androidx.room.Database(

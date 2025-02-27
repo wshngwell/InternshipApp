@@ -14,14 +14,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.example.internshipapp.navigation.Screen
-import com.example.internshipapp.navigation.myNavigate
+import com.example.internshipapp.presentation.destinations.ADestination
+import com.example.internshipapp.presentation.destinations.ConsumersScreenDestination
+import com.example.internshipapp.presentation.destinations.LoginScreenDestination
+import com.example.internshipapp.presentation.destinations.PaginationScreenDestination
+import com.example.internshipapp.presentation.destinations.PostsScreenDestination
+import com.example.internshipapp.presentation.destinations.TwoBoxesTaskDestination
 import com.example.internshipapp.ui.theme.defaultButtonTextSp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun TasksScreen(
-    navController: NavController
+    navigator: DestinationsNavigator
 ) {
     Box(
         modifier = Modifier
@@ -33,7 +41,7 @@ fun TasksScreen(
         Column {
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { navController.myNavigate(Screen.AuthorizationScreen.getAuthorizationScreenRoute()) },
+                onClick = { navigator.navigate(LoginScreenDestination) },
                 colors = ButtonColors(
                     containerColor = Color.Magenta,
                     contentColor = Color.White,
@@ -48,7 +56,7 @@ fun TasksScreen(
             }
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { navController.myNavigate(Screen.PostScreen.getPostScreenRoute()) },
+                onClick = { navigator.navigate(PostsScreenDestination()) },
                 colors = ButtonColors(
                     containerColor = Color.Magenta,
                     contentColor = Color.White,
@@ -63,7 +71,7 @@ fun TasksScreen(
             }
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { navController.myNavigate(Screen.ConsumersScreen.getConsumersScreenRoute()) },
+                onClick = { navigator.navigate(ConsumersScreenDestination) },
                 colors = ButtonColors(
                     containerColor = Color.Magenta,
                     contentColor = Color.White,
@@ -80,7 +88,7 @@ fun TasksScreen(
 
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { navController.myNavigate(Screen.PaginationScreen.getPaginationScreen()) },
+                onClick = { navigator.navigate(PaginationScreenDestination) },
                 colors = ButtonColors(
                     containerColor = Color.Magenta,
                     contentColor = Color.White,
@@ -95,7 +103,7 @@ fun TasksScreen(
             }
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { navController.myNavigate(Screen.TwoBoxesTaskScreen.getTwoBoxesTaskScreenRoute()) },
+                onClick = { navigator.navigate(TwoBoxesTaskDestination) },
                 colors = ButtonColors(
                     containerColor = Color.Magenta,
                     contentColor = Color.White,
@@ -106,6 +114,21 @@ fun TasksScreen(
                 Text(
                     fontSize = defaultButtonTextSp,
                     text = "TwoBoxesTask"
+                )
+            }
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navigator.navigate(ADestination) },
+                colors = ButtonColors(
+                    containerColor = Color.Magenta,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+            ) {
+                Text(
+                    fontSize = defaultButtonTextSp,
+                    text = "Compose Destionations Task"
                 )
             }
         }

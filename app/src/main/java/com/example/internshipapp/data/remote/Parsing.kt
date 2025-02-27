@@ -1,6 +1,5 @@
 package com.example.internshipapp.data.remote
 
-import android.util.Log
 import com.example.internshipapp.domain.entities.LoadingException
 import com.example.internshipapp.myLog
 import retrofit2.HttpException

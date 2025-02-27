@@ -28,13 +28,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import com.example.internshipapp.ui.theme.headlinesTextSp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
+@RootNavGraph
+@Destination
 @Composable
 fun DetailedPostWithCommentsScreen(
+    navigator: DestinationsNavigator,
     postEntity: PostEntity
 ) {
     val viewModel =

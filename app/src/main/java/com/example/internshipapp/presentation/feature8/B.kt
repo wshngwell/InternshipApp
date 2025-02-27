@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.internshipapp.myLog
-import com.example.internshipapp.presentation.feature8.destinations.CDestination
+import com.example.internshipapp.presentation.destinations.CDestination
 import com.example.internshipapp.presentation.feature8.navigation.MyNestedNavGraph
 import com.example.internshipapp.ui.theme.defaultButtonTextSp
 import com.ramcosta.composedestinations.annotation.Destination
@@ -42,7 +42,7 @@ fun B(
     resultRecipient.onNavResult { result ->
         when (result) {
             is NavResult.Canceled -> {
-
+                //nothing
             }
 
             is NavResult.Value -> {
@@ -73,7 +73,7 @@ fun B(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    navigator.navigate(CDestination)
+                   navigator.navigate(CDestination)
                 },
                 colors = ButtonColors(
                     containerColor = Color.Magenta,

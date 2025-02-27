@@ -15,24 +15,23 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.example.internshipapp.data.local.dbModels.ConsumerDbModel
-import com.example.internshipapp.presentation.feature5.ConsumersViewModel.*
-import org.koin.androidx.compose.koinViewModel
+import com.example.internshipapp.presentation.feature5.ConsumersViewModel.Intent
+import com.example.internshipapp.presentation.feature5.ConsumersViewModel.State
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-
+@RootNavGraph
+@Destination
 @Composable
 fun ConsumersScreen(
-    navController: NavController
+    navigator: DestinationsNavigator
 ) {
 
   /*  //val viewModel = koinViewModel<ConsumersViewModel>()

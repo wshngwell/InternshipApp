@@ -21,14 +21,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.example.internshipapp.presentation.feature6.PaginationViewModel.Intent
 import com.example.internshipapp.presentation.feature6.PaginationViewModel.State
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import org.koin.androidx.compose.koinViewModel
 
+@RootNavGraph
+@Destination
 @Composable
 fun PaginationScreen(
-    navController: NavController
+    navigator: DestinationsNavigator
 ) {
     val viewModel = koinViewModel<PaginationViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()

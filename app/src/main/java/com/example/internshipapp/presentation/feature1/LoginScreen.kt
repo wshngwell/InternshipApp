@@ -30,20 +30,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.example.internshipapp.R
-import com.example.internshipapp.navigation.Screen
-import com.example.internshipapp.navigation.myNavigate
+import com.example.internshipapp.presentation.destinations.AfterAuthorizationScreenDestination
 import com.example.internshipapp.ui.theme.defaultButtonTextSp
 import com.example.internshipapp.ui.theme.defaultTextSp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.androidx.compose.koinViewModel
 
+@RootNavGraph
+@Destination
 @Composable
 fun LoginScreen(
-    navController: NavController
-) {
+    navigator: DestinationsNavigator
+    ) {
 
     val viewModel = koinViewModel<LoginViewModel>()
     val event: Flow<LoginViewModel.Event> by remember { mutableStateOf(viewModel.event) }
@@ -64,7 +67,7 @@ fun LoginScreen(
                 }
 
                 LoginViewModel.Event.OnLoginSuccess -> {
-                    navController.myNavigate(Screen.AfterAuthorizationScreen.getAfterAuthorizationScreenRoute())
+                    navigator.navigate(AfterAuthorizationScreenDestination)
                 }
             }
 

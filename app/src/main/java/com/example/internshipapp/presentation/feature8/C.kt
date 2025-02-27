@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.internshipapp.presentation.NavGraphs
 import com.example.internshipapp.presentation.feature8.navigation.MyNestedNavGraph
 import com.example.internshipapp.ui.theme.defaultButtonTextSp
 import com.ramcosta.composedestinations.annotation.Destination
