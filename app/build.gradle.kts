@@ -103,4 +103,8 @@ dependencies {
 
     //LeakCanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
+
+    //compose destinations library
+    implementation("io.github.raamcosta.compose-destinations:animations-core:1.10.2")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.10.2")
 }

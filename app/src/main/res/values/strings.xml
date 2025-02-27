@@ -7,4 +7,5 @@
     <string name="noCommentsError">Вернулся пустой список комментариев</string>
     <string name="noPostError">Вернулся пустой список постов</string>
     <string name="otherError">Другая ошибка</string>
+    <string name="title_activity_try_compose_destination">TryComposeDestinationActivity</string>
 </resources>

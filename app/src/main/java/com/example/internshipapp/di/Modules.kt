@@ -28,6 +28,7 @@ import com.example.internshipapp.presentation.feature2.PostWithCommentsViewModel
 import com.example.internshipapp.presentation.feature2.PostsViewModel
 import com.example.internshipapp.presentation.feature5.ConsumersViewModel
 import com.example.internshipapp.presentation.feature6.PaginationViewModel
+import com.example.internshipapp.presentation.feature8.NavigationTestViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -125,6 +126,9 @@ val appModule = module {
     }
     single<ApiService> {
         ApiFactory.apiService(application = androidApplication())
+    }
+    viewModel<NavigationTestViewModel> {
+        NavigationTestViewModel()
     }
 }
 
