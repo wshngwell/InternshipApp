@@ -127,6 +127,7 @@ val appModule = module {
     single<ApiService> {
         ApiFactory.apiService(application = androidApplication())
     }
+
     viewModel<NavigationTestViewModel> {
         NavigationTestViewModel()
     }

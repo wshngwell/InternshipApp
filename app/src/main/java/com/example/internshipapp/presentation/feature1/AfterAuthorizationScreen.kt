@@ -14,8 +14,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.internshipapp.ui.theme.defaultTextSp
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@RootNavGraph
 @Destination
 @Composable
 fun AfterAuthorizationScreen(

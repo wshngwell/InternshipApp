@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.internshipapp.presentation.destinations.DetailedPostWithCommentsScreenDestination
 import com.example.internshipapp.presentation.feature2.PostsViewModel.Intent
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
+import com.google.gson.Gson
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -53,9 +54,10 @@ fun PostsScreen(
         event.filterIsInstance<PostsViewModel.Event>().collect {
             when (it) {
                 is PostsViewModel.Event.OnPostClicked -> {
+                    val postGson = Gson().toJson(it.postEntity)
                     navigator.navigate(
                         DetailedPostWithCommentsScreenDestination(
-                            it.postEntity
+                            postGson
                         )
                     )
                 }

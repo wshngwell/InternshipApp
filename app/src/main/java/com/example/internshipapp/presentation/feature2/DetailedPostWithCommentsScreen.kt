@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import com.example.internshipapp.ui.theme.headlinesTextSp
+import com.google.gson.Gson
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -41,10 +42,15 @@ import org.koin.core.parameter.parametersOf
 @Composable
 fun DetailedPostWithCommentsScreen(
     navigator: DestinationsNavigator,
-    postEntity: PostEntity
+    postEntityGson: String
 ) {
+
+
     val viewModel =
-        koinViewModel<PostWithCommentsViewModel>(parameters = { parametersOf(postEntity) })
+        koinViewModel<PostWithCommentsViewModel>(parameters = {
+            val postEntity = Gson().fromJson(postEntityGson, PostEntity::class.java)
+            parametersOf(postEntity)
+        })
     val state by viewModel.state.collectAsStateWithLifecycle()
     val intent: (PostWithCommentsViewModel.Intent) -> Unit by remember {
         mutableStateOf(viewModel::sendIntent)

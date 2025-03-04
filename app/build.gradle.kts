@@ -124,6 +124,10 @@ dependencies {
     implementation("com.andretietz.retrofit:cache-extension:1.0.0")
     testImplementation("io.insert-koin:koin-test:3.4.0")
 
+    //for testing
+    testImplementation("org.mockito:mockito-core:5.8.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.1")
+
     //LeakCanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 
