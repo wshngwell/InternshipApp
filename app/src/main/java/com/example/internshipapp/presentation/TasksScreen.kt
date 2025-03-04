@@ -19,6 +19,7 @@ import com.example.internshipapp.presentation.destinations.ConsumersScreenDestin
 import com.example.internshipapp.presentation.destinations.LoginScreenDestination
 import com.example.internshipapp.presentation.destinations.PaginationScreenDestination
 import com.example.internshipapp.presentation.destinations.PostsScreenDestination
+import com.example.internshipapp.presentation.destinations.ShowNotificationScreenDestination
 import com.example.internshipapp.presentation.destinations.TwoBoxesTaskDestination
 import com.example.internshipapp.ui.theme.defaultButtonTextSp
 import com.ramcosta.composedestinations.annotation.Destination
@@ -129,6 +130,21 @@ fun TasksScreen(
                 Text(
                     fontSize = defaultButtonTextSp,
                     text = "Compose Destionations Task"
+                )
+            }
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navigator.navigate(ShowNotificationScreenDestination) },
+                colors = ButtonColors(
+                    containerColor = Color.Magenta,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+            ) {
+                Text(
+                    fontSize = defaultButtonTextSp,
+                    text = "Show Notification Task"
                 )
             }
         }
