@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.internshipapp.presentation.destinations.ADestination
 import com.example.internshipapp.presentation.destinations.ConsumersScreenDestination
 import com.example.internshipapp.presentation.destinations.LoginScreenDestination
+import com.example.internshipapp.presentation.destinations.Media3PlayerViewDestination
 import com.example.internshipapp.presentation.destinations.PaginationScreenDestination
 import com.example.internshipapp.presentation.destinations.PostsScreenDestination
 import com.example.internshipapp.presentation.destinations.ShowNotificationScreenDestination
@@ -145,6 +146,21 @@ fun TasksScreen(
                 Text(
                     fontSize = defaultButtonTextSp,
                     text = "Show Notification Task"
+                )
+            }
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navigator.navigate(Media3PlayerViewDestination) },
+                colors = ButtonColors(
+                    containerColor = Color.Magenta,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+            ) {
+                Text(
+                    fontSize = defaultButtonTextSp,
+                    text = "Exo player"
                 )
             }
         }

@@ -1,5 +1,6 @@
 package com.example.internshipapp.di
 
+import androidx.media3.exoplayer.ExoPlayer
 import com.example.internshipapp.data.local.ConsumersRepositoryImpl
 import com.example.internshipapp.data.local.PostLocalRepository
 import com.example.internshipapp.data.local.PostsDao
@@ -16,20 +17,22 @@ import com.example.internshipapp.domain.repositories.IConsumersRepository
 import com.example.internshipapp.domain.repositories.ILocalPostRepository
 import com.example.internshipapp.domain.repositories.IPaginationRepository
 import com.example.internshipapp.domain.repositories.IPostAndCommentsRemoteRepository
-import com.example.internshipapp.domain.usecases.AuthUseCase
-import com.example.internshipapp.domain.usecases.GetCommentsUseCase
-import com.example.internshipapp.domain.usecases.GetPostsFromNetworkUseCase
 import com.example.internshipapp.domain.usecases.AddPostToFavouriteUseCase
+import com.example.internshipapp.domain.usecases.AuthUseCase
 import com.example.internshipapp.domain.usecases.DeletePostsFromFavouriteUseCase
+import com.example.internshipapp.domain.usecases.GetCommentsUseCase
 import com.example.internshipapp.domain.usecases.GetDataFromPaginationTaskUseCase
 import com.example.internshipapp.domain.usecases.GetFavouritePostsUseCase
+import com.example.internshipapp.domain.usecases.GetPostsFromNetworkUseCase
 import com.example.internshipapp.presentation.feature1.LoginViewModel
+import com.example.internshipapp.presentation.feature12.MediaPlayerViewModel
 import com.example.internshipapp.presentation.feature2.PostWithCommentsViewModel
 import com.example.internshipapp.presentation.feature2.PostsViewModel
 import com.example.internshipapp.presentation.feature5.ConsumersViewModel
 import com.example.internshipapp.presentation.feature6.PaginationViewModel
 import com.example.internshipapp.presentation.feature8.NavigationTestViewModel
 import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -130,6 +133,13 @@ val appModule = module {
 
     viewModel<NavigationTestViewModel> {
         NavigationTestViewModel()
+    }
+
+    viewModel<MediaPlayerViewModel> {
+        MediaPlayerViewModel(
+            player = ExoPlayer.Builder(androidApplication())
+                .build()
+        )
     }
 }
 

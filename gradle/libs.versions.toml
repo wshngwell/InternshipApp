@@ -13,6 +13,7 @@ logging = "4.9.3"
 serialization = "1.7.3"
 room = "2.6.1"
 ksp = "1.9.22-1.0.16"
+benchmarkMacro = "1.3.3"
 
 
 [libraries]
@@ -37,6 +38,7 @@ serializable = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-
 
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-core = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro", version.ref = "benchmarkMacro" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
