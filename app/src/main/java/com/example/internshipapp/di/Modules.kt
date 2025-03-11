@@ -1,6 +1,7 @@
 package com.example.internshipapp.di
 
 import androidx.media3.exoplayer.ExoPlayer
+import com.example.internshipapp.data.feature13.MusicPlayerRepositoryImpl
 import com.example.internshipapp.data.local.ConsumersRepositoryImpl
 import com.example.internshipapp.data.local.PostLocalRepository
 import com.example.internshipapp.data.local.PostsDao
@@ -15,6 +16,7 @@ import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.repositories.IAuthRepository
 import com.example.internshipapp.domain.repositories.IConsumersRepository
 import com.example.internshipapp.domain.repositories.ILocalPostRepository
+import com.example.internshipapp.domain.repositories.IMusicPlayerRepository
 import com.example.internshipapp.domain.repositories.IPaginationRepository
 import com.example.internshipapp.domain.repositories.IPostAndCommentsRemoteRepository
 import com.example.internshipapp.domain.usecases.AddPostToFavouriteUseCase
@@ -24,22 +26,25 @@ import com.example.internshipapp.domain.usecases.GetCommentsUseCase
 import com.example.internshipapp.domain.usecases.GetDataFromPaginationTaskUseCase
 import com.example.internshipapp.domain.usecases.GetFavouritePostsUseCase
 import com.example.internshipapp.domain.usecases.GetPostsFromNetworkUseCase
+import com.example.internshipapp.domain.usecases.feature13.GetMusicPlayerStateUseCase
+import com.example.internshipapp.domain.usecases.feature13.OnPlayOrPauseStateChangeUseCase
 import com.example.internshipapp.presentation.feature1.LoginViewModel
 import com.example.internshipapp.presentation.feature12.MediaPlayerViewModel
+import com.example.internshipapp.presentation.feature13.MusicPlayerViewModel
 import com.example.internshipapp.presentation.feature2.PostWithCommentsViewModel
 import com.example.internshipapp.presentation.feature2.PostsViewModel
 import com.example.internshipapp.presentation.feature5.ConsumersViewModel
 import com.example.internshipapp.presentation.feature6.PaginationViewModel
 import com.example.internshipapp.presentation.feature8.NavigationTestViewModel
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 
 
 val appModule = module {
-    //useCases
 
+    //useCases
     factory<GetDataFromPaginationTaskUseCase> {
         GetDataFromPaginationTaskUseCase(
             iPaginationRepository = get<IPaginationRepository>()
@@ -74,6 +79,18 @@ val appModule = module {
             iLocalPostRepository = get<ILocalPostRepository>()
         )
     }
+
+    //feature13
+    factory<GetMusicPlayerStateUseCase> {
+        GetMusicPlayerStateUseCase(
+            iMusicPlayerRepository = get<IMusicPlayerRepository>()
+        )
+    }
+    factory<OnPlayOrPauseStateChangeUseCase> {
+        OnPlayOrPauseStateChangeUseCase(
+            iMusicPlayerRepository = get<IMusicPlayerRepository>()
+        )
+    }
     //repositories
     single<IAuthRepository> {
         AuthRepositoryImpl()
@@ -90,6 +107,11 @@ val appModule = module {
     single<IConsumersRepository> {
         ConsumersRepositoryImpl(
             consumersDao = get<ConsumersDao>()
+        )
+    }
+    single<IMusicPlayerRepository> {
+        MusicPlayerRepositoryImpl(
+            application = androidApplication()
         )
     }
 
@@ -139,6 +161,12 @@ val appModule = module {
         MediaPlayerViewModel(
             player = ExoPlayer.Builder(androidApplication())
                 .build()
+        )
+    }
+    viewModel<MusicPlayerViewModel> {
+        MusicPlayerViewModel(
+            getMusicPlayerStateUseCase = get<GetMusicPlayerStateUseCase>(),
+            onPlayOrPauseStateChangeUseCase = get<OnPlayOrPauseStateChangeUseCase>()
         )
     }
 }

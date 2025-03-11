@@ -18,6 +18,7 @@ import com.example.internshipapp.presentation.destinations.ADestination
 import com.example.internshipapp.presentation.destinations.ConsumersScreenDestination
 import com.example.internshipapp.presentation.destinations.LoginScreenDestination
 import com.example.internshipapp.presentation.destinations.Media3PlayerViewDestination
+import com.example.internshipapp.presentation.destinations.MusicPLayerScreenDestination
 import com.example.internshipapp.presentation.destinations.PaginationScreenDestination
 import com.example.internshipapp.presentation.destinations.PostsScreenDestination
 import com.example.internshipapp.presentation.destinations.ShowNotificationScreenDestination
@@ -161,6 +162,22 @@ fun TasksScreen(
                 Text(
                     fontSize = defaultButtonTextSp,
                     text = "Exo player"
+                )
+            }
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navigator.navigate(MusicPLayerScreenDestination) },
+                colors = ButtonColors(
+                    containerColor = Color.Magenta,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+            ) {
+                Text(
+                    fontSize = defaultButtonTextSp,
+                    text = "Foreground Service and Exo Player"
                 )
             }
         }

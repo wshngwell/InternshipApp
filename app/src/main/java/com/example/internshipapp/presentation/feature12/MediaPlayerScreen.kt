@@ -180,7 +180,7 @@ private fun BottomControls(
 }
 
 @SuppressLint("DefaultLocale")
-fun Long.formatMinSec(): String {
+private fun Long.formatMinSec(): String {
 
     return String.format(
         "%02d:%02d",
