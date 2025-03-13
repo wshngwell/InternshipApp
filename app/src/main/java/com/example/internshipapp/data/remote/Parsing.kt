@@ -5,7 +5,7 @@ import com.example.internshipapp.myLog
 import retrofit2.HttpException
 import java.io.IOException
 
-fun Throwable.parseToAuthException(): LoadingException {
+fun Throwable.parseToLoadingException(): LoadingException {
     myLog(this.stackTraceToString())
     return when (this) {
         is HttpException -> LoadingException.HttpError

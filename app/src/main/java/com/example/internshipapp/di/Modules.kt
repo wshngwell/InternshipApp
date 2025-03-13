@@ -2,6 +2,7 @@ package com.example.internshipapp.di
 
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.internshipapp.data.feature13.MusicPlayerRepositoryImpl
+import com.example.internshipapp.data.feature14.DownLoadFileRepositoryImpl
 import com.example.internshipapp.data.local.ConsumersRepositoryImpl
 import com.example.internshipapp.data.local.PostLocalRepository
 import com.example.internshipapp.data.local.PostsDao
@@ -15,6 +16,7 @@ import com.example.internshipapp.data.remote.feature6.PaginationRepository
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.repositories.IAuthRepository
 import com.example.internshipapp.domain.repositories.IConsumersRepository
+import com.example.internshipapp.domain.repositories.IDownLoadFileRepository
 import com.example.internshipapp.domain.repositories.ILocalPostRepository
 import com.example.internshipapp.domain.repositories.IMusicPlayerRepository
 import com.example.internshipapp.domain.repositories.IPaginationRepository
@@ -28,9 +30,11 @@ import com.example.internshipapp.domain.usecases.GetFavouritePostsUseCase
 import com.example.internshipapp.domain.usecases.GetPostsFromNetworkUseCase
 import com.example.internshipapp.domain.usecases.feature13.GetMusicPlayerStateUseCase
 import com.example.internshipapp.domain.usecases.feature13.OnPlayOrPauseStateChangeUseCase
+import com.example.internshipapp.domain.usecases.feature14.DownloadFileUseCase
 import com.example.internshipapp.presentation.feature1.LoginViewModel
 import com.example.internshipapp.presentation.feature12.MediaPlayerViewModel
 import com.example.internshipapp.presentation.feature13.MusicPlayerViewModel
+import com.example.internshipapp.presentation.feature14.RetrofitDownloadingViewModel
 import com.example.internshipapp.presentation.feature2.PostWithCommentsViewModel
 import com.example.internshipapp.presentation.feature2.PostsViewModel
 import com.example.internshipapp.presentation.feature5.ConsumersViewModel
@@ -91,6 +95,10 @@ val appModule = module {
             iMusicPlayerRepository = get<IMusicPlayerRepository>()
         )
     }
+    factory<DownloadFileUseCase> {
+        DownloadFileUseCase(iDownLoadFileRepository = get<IDownLoadFileRepository>())
+    }
+
     //repositories
     single<IAuthRepository> {
         AuthRepositoryImpl()
@@ -112,6 +120,13 @@ val appModule = module {
     single<IMusicPlayerRepository> {
         MusicPlayerRepositoryImpl(
             application = androidApplication()
+        )
+    }
+    //feature14
+    single<IDownLoadFileRepository> {
+        DownLoadFileRepositoryImpl(
+            apiService = get<ApiService>(),
+            app = androidApplication()
         )
     }
 
@@ -168,6 +183,9 @@ val appModule = module {
             getMusicPlayerStateUseCase = get<GetMusicPlayerStateUseCase>(),
             onPlayOrPauseStateChangeUseCase = get<OnPlayOrPauseStateChangeUseCase>()
         )
+    }
+    viewModel<RetrofitDownloadingViewModel> {
+        RetrofitDownloadingViewModel(downloadFileUseCase = get<DownloadFileUseCase>())
     }
 }
 

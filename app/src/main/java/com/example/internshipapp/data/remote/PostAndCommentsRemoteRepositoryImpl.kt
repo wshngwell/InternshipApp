@@ -28,7 +28,7 @@ class PostAndCommentsRemoteRepositoryImpl(
                 )
             }.getOrElse {
                 TResult.Error<List<PostEntity>, LoadingException>(
-                    exception = it.parseToAuthException()
+                    exception = it.parseToLoadingException()
                 )
             }
         }
@@ -47,7 +47,7 @@ class PostAndCommentsRemoteRepositoryImpl(
                 )
             }.getOrElse {
                 TResult.Error<List<CommentEntity>, LoadingException>(
-                    exception = it.parseToAuthException()
+                    exception = it.parseToLoadingException()
                 )
             }
 

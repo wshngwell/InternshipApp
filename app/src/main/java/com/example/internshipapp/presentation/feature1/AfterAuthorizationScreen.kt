@@ -21,7 +21,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun AfterAuthorizationScreen(
-   navigator: DestinationsNavigator
+    navigator: DestinationsNavigator
 ) {
     Box(
         modifier = Modifier

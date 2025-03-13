@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val repository by inject<IMusicPlayerRepository>()
+     /*   val repository by inject<IMusicPlayerRepository>()
         val intent = Intent(this, MusicForegroundService::class.java)
         lifecycleScope.launch {
             repository.musicState.map { it.isPlayingState }.distinctUntilChanged().collect {
@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     stopService(intent)
                 }
             }
-        }
+        }*/
 
         setContent {
             InternshipAppTheme {
