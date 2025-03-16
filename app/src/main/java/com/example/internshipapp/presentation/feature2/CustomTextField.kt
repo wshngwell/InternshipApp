@@ -67,7 +67,9 @@ fun CustomTextField(
                     .fillMaxWidth()
                     .background(Color.Black)
                     .border(
-                        width = 5.dp, color = postColor, shape = RoundedCornerShape(12.dp)
+                        width = 5.dp,
+                        color = postColor,
+                        shape = RoundedCornerShape(12.dp)
                     ),
                 onValueChange = {
                     if (it.length <= maxLength) {
@@ -91,7 +93,9 @@ fun CustomTextField(
                             .fillMaxWidth()
                             .width(150.dp)
                             .border(
-                                width = 5.dp, color = postColor, shape = RoundedCornerShape(12.dp)
+                                width = 5.dp,
+                                color = postColor,
+                                shape = RoundedCornerShape(12.dp)
                             )
                             .padding(5.dp)
                             .background(Color.LightGray)

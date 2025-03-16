@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import com.example.internshipapp.ui.theme.headlinesTextSp
+import com.example.internshipapp.ui.theme.myBackground
 import com.google.gson.Gson
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -97,7 +98,7 @@ fun UI(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(myBackground)
             .padding(15.dp)
     ) {
         if (state.isLoading) {

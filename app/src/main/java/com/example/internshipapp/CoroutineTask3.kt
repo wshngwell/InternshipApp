@@ -40,7 +40,6 @@ class CoroutineTask3 {
         Log.e("!!!", "${a}")
     }
 
-
     fun main() {
 
         val job = MainScope().launch {

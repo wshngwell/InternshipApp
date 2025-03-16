@@ -14,13 +14,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.ui.theme.defaultTextSp
 import com.example.internshipapp.ui.theme.headlinesTextSp
+import com.example.internshipapp.ui.theme.onPostColorContent
 import com.example.internshipapp.ui.theme.postColor
 
 @Composable
@@ -49,15 +49,15 @@ fun Post(
                     .fillMaxWidth()
                     .background(postColor)
             ) {
-               FavoriteButton(
-                   isFavorite = postEntity.isFavourite,
-                   onClick = {
-                       onFavouriteClicked()
-                   })
+                FavoriteButton(
+                    isFavorite = postEntity.isFavourite,
+                    onClick = {
+                        onFavouriteClicked()
+                    })
             }
             Text(
                 text = postEntity.title,
-                color = Color.White,
+                color = onPostColorContent,
                 fontWeight = FontWeight.Bold,
                 fontSize = headlinesTextSp,
                 textAlign = TextAlign.Center
@@ -65,7 +65,7 @@ fun Post(
             Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = postEntity.body,
-                color = Color.White,
+                color = onPostColorContent,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = defaultTextSp,
             )

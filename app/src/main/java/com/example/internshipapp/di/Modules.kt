@@ -42,7 +42,6 @@ import com.example.internshipapp.presentation.feature6.PaginationViewModel
 import com.example.internshipapp.presentation.feature8.NavigationTestViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 
 

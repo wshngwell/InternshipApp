@@ -17,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.internshipapp.presentation.destinations.DetailedPostWithCommentsScreenDestination
 import com.example.internshipapp.presentation.feature2.PostsViewModel.Intent
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
+import com.example.internshipapp.ui.theme.myBackground
 import com.google.gson.Gson
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -89,8 +89,8 @@ private fun UI(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
-            .padding(15.dp)
+            .background(myBackground)
+            .padding(15.dp),
     ) {
         if (state.isLoading) {
             Box(
@@ -113,8 +113,9 @@ private fun UI(
             modifier = Modifier.fillMaxWidth(),
             value = state.filterText
         )
+        SwitchThemeCheckBoxes()
         LazyColumn(
-            modifier = Modifier.padding(top = 60.dp),
+            modifier = Modifier.padding(top = 130.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(state.filteredListOfPostEntities, key = { it.id }) {

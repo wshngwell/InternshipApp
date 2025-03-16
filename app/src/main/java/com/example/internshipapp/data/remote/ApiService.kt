@@ -27,5 +27,4 @@ interface ApiService {
         @Url urlOfFile: String
     ): ResponseBody
 
-
 }

@@ -36,6 +36,8 @@ fun C(
 ) {
     val viewModel = navController.sharedViewModel<NavigationTestViewModel>()
 
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()

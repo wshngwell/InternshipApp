@@ -196,6 +196,21 @@ fun TasksScreen(
                     text = "Retrofit downloading"
                 )
             }
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navigator.navigate(RetrofitDownLoadingFileScreenDestination) },
+                colors = ButtonColors(
+                    containerColor = Color.Magenta,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+            ) {
+                Text(
+                    fontSize = defaultButtonTextSp,
+                    text = "view task"
+                )
+            }
         }
 
     }
