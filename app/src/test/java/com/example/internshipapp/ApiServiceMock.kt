@@ -1,10 +1,10 @@
 package com.example.internshipapp
 
-import android.util.Log
 import com.example.internshipapp.data.remote.ApiService
 import com.example.internshipapp.data.remote.dto.CommentsAnswerDto
 import com.example.internshipapp.data.remote.dto.PostsAnswerDto
 import com.example.internshipapp.data.remote.dto.PostsAnswerItemDto
+import okhttp3.ResponseBody
 import org.koin.dsl.module
 
 class ApiServiceMock {
@@ -28,6 +28,10 @@ class ApiServiceMock {
                 }
 
                 override suspend fun loadComments(postId: Int): CommentsAnswerDto {
+                    TODO("Not yet implemented")
+                }
+
+                override suspend fun downLoadFile(urlOfFile: String): ResponseBody {
                     TODO("Not yet implemented")
                 }
             }

@@ -34,7 +34,6 @@ fun InternshipAppTheme(
     remember { getCurrentTheme(context, isDarkTheme) }
 
     val colorScheme by remember(currentTheme.collectAsStateWithLifecycle().value.isSystemDark) {
-        myLog("recomposition")
         mutableStateOf(
             darkColorScheme(
                 primary = postColor,

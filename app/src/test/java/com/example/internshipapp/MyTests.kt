@@ -13,7 +13,6 @@ import kotlin.test.assertEquals
 
 class MyTests : BaseTestClass() {
 
-
     @Test
     fun testPostsFromNetwork() {
         test {
@@ -27,15 +26,12 @@ class MyTests : BaseTestClass() {
         }
     }
 
-
     @Test
     fun testGetPostsFromDb() {
         test {
             val vm = get<PostsViewModel>()
             delay(100)
             assertEquals(vm.state.value.favouritePosts.size, 4)
-
-
         }
     }
 

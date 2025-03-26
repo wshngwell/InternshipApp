@@ -1,13 +1,6 @@
 package com.example.internshipapp
 
 import android.content.Context
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.ui.graphics.Color
-import com.example.internshipapp.ui.theme.buttonsColor
-import com.example.internshipapp.ui.theme.disabledButtonsColor
-import com.example.internshipapp.ui.theme.onBackground
-import com.example.internshipapp.ui.theme.secondary
-import com.example.internshipapp.ui.theme.tertiary
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -68,7 +61,10 @@ fun saveCurrentTheme(
     isDarkTheme: Boolean
 ) {
     val sharedPref =
-        context.applicationContext.getSharedPreferences(THEME_TYPE_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+        context.applicationContext.getSharedPreferences(
+            THEME_TYPE_SHARED_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
     with(sharedPref.edit()) {
         putString(THEME_TYPE_KEY, themeType.name)
         apply()
@@ -82,7 +78,10 @@ fun getCurrentTheme(
     isDarkTheme: Boolean
 ) {
     val sharedPref =
-        context.applicationContext.getSharedPreferences(THEME_TYPE_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+        context.applicationContext.getSharedPreferences(
+            THEME_TYPE_SHARED_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
 
     val themeTypeName = sharedPref.getString(THEME_TYPE_KEY, ThemeType.LIGHT.name)
 

@@ -12,12 +12,14 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.internshipapp.domain.entities.PostEntity
+import com.example.internshipapp.myLog
 import com.example.internshipapp.ui.theme.defaultTextSp
 import com.example.internshipapp.ui.theme.headlinesTextSp
 import com.example.internshipapp.ui.theme.onPostColorContent
@@ -29,6 +31,9 @@ fun Post(
     onPostClicked: () -> Unit = {},
     onFavouriteClicked: () -> Unit = {}
 ) {
+    SideEffect {
+        myLog("POST RECOMPOSITION")
+    }
     Card(
         elevation = CardDefaults.elevatedCardElevation(10.dp),
         modifier = Modifier

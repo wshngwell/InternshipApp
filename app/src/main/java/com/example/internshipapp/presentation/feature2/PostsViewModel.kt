@@ -103,7 +103,7 @@ class PostsViewModel(
             is Intent.PostClicked -> _event.emit(Event.OnPostClicked(intent.postEntity))
             is Intent.FavouriteButtonClicked -> {
                 viewModelScope.launch {
-                    val favouriteIds = state.value.favouritePosts.map { it.id }
+                        val favouriteIds = state.value.favouritePosts.map { it.id }
                     if (favouriteIds.contains(intent.postEntity.id)) {
                         deletePostsFromFavouriteUseCase(intent.postEntity.id)
                         val newLoadedList = _state.value.loadedPostsListFromNetwork.map {
@@ -114,8 +114,6 @@ class PostsViewModel(
                             }
                         }
                         _state.update { it.copy(loadedPostsListFromNetwork = newLoadedList) }
-                    } else {
-                        addPostToFavouriteUseCase.addPostToFavourite(intent.postEntity)
                     }
                 }
             }

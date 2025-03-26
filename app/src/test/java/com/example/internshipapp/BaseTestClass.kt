@@ -23,7 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 open class BaseTestClass : KoinTest {
 
-    private val testDispatcher = TestCoroutineDispatcher()
+    private val testDispatcher = UnconfinedTestDispatcher()
 
     private val testModulesList = appModule + listOf(
         ApiServiceMock().module,

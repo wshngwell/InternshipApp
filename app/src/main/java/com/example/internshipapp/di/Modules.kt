@@ -172,10 +172,7 @@ val appModule = module {
     }
 
     viewModel<MediaPlayerViewModel> {
-        MediaPlayerViewModel(
-            player = ExoPlayer.Builder(androidApplication())
-                .build()
-        )
+        MediaPlayerViewModel(application = androidApplication())
     }
     viewModel<MusicPlayerViewModel> {
         MusicPlayerViewModel(

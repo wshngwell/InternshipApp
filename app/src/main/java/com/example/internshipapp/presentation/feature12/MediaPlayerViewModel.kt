@@ -1,10 +1,12 @@
 package com.example.internshipapp.presentation.feature12
 
+import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,9 +14,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import org.koin.android.ext.koin.androidApplication
 
 class MediaPlayerViewModel(
-    val player: Player
+    application: Application
 ) : ViewModel() {
 
 
@@ -22,7 +25,7 @@ class MediaPlayerViewModel(
         "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 
     data class State(
-        val player: Player? = null,
+        val player: Player,
         val isPlaying: Boolean = false,
         val currentPositionOfSlider: Long = 0L,
         val isSliderDragging: Boolean = false,
@@ -31,7 +34,12 @@ class MediaPlayerViewModel(
         val shouldControlsButtonsBeVisible: Boolean = true
     ) {}
 
-    private val _state = MutableStateFlow(State())
+    private val _state = MutableStateFlow(
+        State(
+            player = ExoPlayer.Builder(application)
+                .build()
+        )
+    )
 
     val state: StateFlow<State> = _state.asStateFlow()
 
@@ -42,7 +50,6 @@ class MediaPlayerViewModel(
         data class ChangeIsSliderDragging(val value: Boolean) : Intent
         data class UpdateShouldControlsButtonsBeVisible(val value: Boolean) : Intent
         data class UpdateCurrentPositionOfSlider(val value: Long) : Intent
-
     }
 
     fun sendIntent(intent: Intent) {
@@ -82,9 +89,6 @@ class MediaPlayerViewModel(
 
 
     init {
-        _state.update {
-            it.copy(player = player)
-        }
         state.value.player?.prepare()
         state.value.player?.setMediaItem(
             MediaItem.fromUri(Uri.parse(videoUrl))
@@ -97,7 +101,7 @@ class MediaPlayerViewModel(
                     _state.update {
                         it.copy(
                             currentPositionOfSlider =
-                            player.currentPosition.coerceAtLeast(0L)
+                            state.value.player.currentPosition
                         )
                     }
                 }
