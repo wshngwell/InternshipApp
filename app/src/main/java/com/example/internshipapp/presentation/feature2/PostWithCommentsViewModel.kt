@@ -6,13 +6,15 @@ import com.example.internshipapp.domain.entities.CommentEntity
 import com.example.internshipapp.domain.entities.LoadingException
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.entities.TResult
+import com.example.internshipapp.domain.usecases.AddPostToFavouriteUseCase
 import com.example.internshipapp.domain.usecases.DeletePostsFromFavouriteUseCase
 import com.example.internshipapp.domain.usecases.GetCommentsUseCase
 import com.example.internshipapp.domain.usecases.GetFavouritePostsUseCase
-import com.example.internshipapp.domain.usecases.AddPostToFavouriteUseCase
 import com.example.internshipapp.presentation.SingleFlowEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -34,6 +36,9 @@ class PostWithCommentsViewModel(
 
     private val _state = MutableStateFlow(State(postEntity = post))
     val state = _state.asStateFlow()
+
+    fun <T> mapState(mMap: (State) -> T) =
+        state.map(mMap).distinctUntilChanged()
 
     sealed interface Event {
         data class Error(val exception: LoadingException) : Event
@@ -86,7 +91,7 @@ class PostWithCommentsViewModel(
                         deletePostUseCase(intent.postEntity.id)
                         _state.update { it.copy(postEntity = it.postEntity.copy(isFavourite = false)) }
                     } else {
-                        addPostToFavouriteUseCase.addPostToFavourite(intent.postEntity)
+                        addPostToFavouriteUseCase(intent.postEntity)
                         _state.update { it.copy(postEntity = it.postEntity.copy(isFavourite = true)) }
                     }
                 }

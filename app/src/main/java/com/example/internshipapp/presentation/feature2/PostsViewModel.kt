@@ -1,18 +1,21 @@
 package com.example.internshipapp.presentation.feature2
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.internshipapp.domain.entities.LoadingException
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.entities.TResult
-import com.example.internshipapp.domain.usecases.GetPostsFromNetworkUseCase
 import com.example.internshipapp.domain.usecases.AddPostToFavouriteUseCase
 import com.example.internshipapp.domain.usecases.DeletePostsFromFavouriteUseCase
 import com.example.internshipapp.domain.usecases.GetFavouritePostsUseCase
+import com.example.internshipapp.domain.usecases.GetPostsFromNetworkUseCase
 import com.example.internshipapp.myLog
 import com.example.internshipapp.presentation.SingleFlowEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -25,6 +28,8 @@ class PostsViewModel(
 
     private val _state = MutableStateFlow(State())
     val state = _state.asStateFlow()
+
+    fun <T> mapState(mMap: (State) -> T) = state.map(mMap).distinctUntilChanged()
 
     private val _event = SingleFlowEvent<Event>(viewModelScope)
     val event = _event.flow
@@ -54,7 +59,17 @@ class PostsViewModel(
     init {
         viewModelScope.launch {
             getFavouritePostsUseCase().collect { favouritePostsList ->
-                myLog("COLLECT $favouritePostsList")
+                Log.e("COllect", favouritePostsList.size.toString())
+
+                state.value.favouritePosts.firstOrNull { !favouritePostsList.contains(it) }
+                    ?.let { changedPost ->
+                        _state.update {
+                            it.copy(loadedPostsListFromNetwork = state.value.loadedPostsListFromNetwork.map {
+                                if (it == changedPost) it.copy(isFavourite = false) else it
+                            })
+                        }
+                    }
+
                 _state.update {
                     it.copy(
                         favouritePosts = favouritePostsList,
@@ -87,7 +102,6 @@ class PostsViewModel(
 
     }
 
-
     sealed interface Intent {
         data class OnPostFilterTextChanged(val text: String) : Intent
         data class PostClicked(val postEntity: PostEntity) : Intent
@@ -95,6 +109,7 @@ class PostsViewModel(
     }
 
     fun sendIntent(intent: Intent) {
+        myLog("HFGHJLKJKHGJ")
         when (intent) {
             is Intent.OnPostFilterTextChanged -> {
                 _state.update { it.copy(filterText = intent.text) }
@@ -103,18 +118,20 @@ class PostsViewModel(
             is Intent.PostClicked -> _event.emit(Event.OnPostClicked(intent.postEntity))
             is Intent.FavouriteButtonClicked -> {
                 viewModelScope.launch {
-                        val favouriteIds = state.value.favouritePosts.map { it.id }
+                    val favouriteIds = state.value.favouritePosts.map { it.id }
                     if (favouriteIds.contains(intent.postEntity.id)) {
                         deletePostsFromFavouriteUseCase(intent.postEntity.id)
-                        val newLoadedList = _state.value.loadedPostsListFromNetwork.map {
-                            if (it == intent.postEntity) {
-                                it.copy(isFavourite = false)
-                            } else {
-                                it
-                            }
-                        }
-                        _state.update { it.copy(loadedPostsListFromNetwork = newLoadedList) }
+                    } else {
+                        addPostToFavouriteUseCase(intent.postEntity)
                     }
+                    val newLoadedList = _state.value.loadedPostsListFromNetwork.map {
+                        if (it == intent.postEntity) {
+                            it.copy(isFavourite = !it.isFavourite)
+                        } else {
+                            it
+                        }
+                    }
+                    _state.update { it.copy(loadedPostsListFromNetwork = newLoadedList) }
                 }
             }
         }

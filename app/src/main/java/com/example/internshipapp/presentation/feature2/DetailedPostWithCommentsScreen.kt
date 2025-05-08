@@ -19,12 +19,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.internshipapp.R
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import com.example.internshipapp.ui.theme.headlinesTextSp
@@ -117,7 +119,7 @@ fun UI(
             item {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Post",
+                    text = stringResource(R.string.post),
                     color = Color.White,
                     textAlign = TextAlign.Center,
                     fontFamily = FontFamily.Serif,
@@ -135,7 +137,7 @@ fun UI(
             item {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Comments",
+                    text = stringResource(R.string.comments),
                     color = Color.White,
                     textAlign = TextAlign.Center,
                     fontFamily = FontFamily.Serif,

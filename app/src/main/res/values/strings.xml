@@ -8,4 +8,8 @@
     <string name="noPostError">Вернулся пустой список постов</string>
     <string name="otherError">Другая ошибка</string>
     <string name="title_activity_try_compose_destination">TryComposeDestinationActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="comments">Comments</string>
+    <string name="post">Post</string>
+    <string name="leak_canary_test_class_name">assertk.Assert</string>
 </resources>

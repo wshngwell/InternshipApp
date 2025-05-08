@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/commentColor"
+        android:orientation="vertical"
+        android:padding="10.dp">
+
+        <TextView
+            android:id="@+id/commentTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="21.sp"
+            android:textStyle="bold"
+            tools:text="magnam facilis autem" />
+
+        <TextView
+            android:id="@+id/commentEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="lalala@gmail.com" />
+
+        <TextView
+            android:id="@+id/commentMainText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="magnam facilis autdsjgsj gdsklgjsdagha shgjsajgjahsghkasjgjsakghasgjjklasgjlsdgsdgsgjskjgsdgsgdgsdsgem" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

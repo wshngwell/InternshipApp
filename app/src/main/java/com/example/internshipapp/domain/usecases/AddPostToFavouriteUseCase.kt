@@ -8,8 +8,7 @@ import kotlinx.coroutines.withContext
 class AddPostToFavouriteUseCase(
     private val localRep: ILocalPostRepository
 ) {
-
-    suspend fun addPostToFavourite(post: PostEntity) = withContext(Dispatchers.IO) {
+    suspend operator fun invoke(post: PostEntity) = withContext(Dispatchers.IO) {
         localRep.addPostToFavourite(post)
     }
 }
