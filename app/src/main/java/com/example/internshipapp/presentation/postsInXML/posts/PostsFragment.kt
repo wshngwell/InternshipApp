@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.internshipapp.R
 import com.example.internshipapp.databinding.FragmentPostsBinding
-import com.example.internshipapp.presentation.GsonUtil.toJson
 import com.example.internshipapp.presentation.feature2.PostsViewModel
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import com.example.internshipapp.presentation.postsInXML.NavigationInstance.Companion.myNavigate
@@ -25,7 +24,7 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
 
     private val binding: FragmentPostsBinding by viewBinding(FragmentPostsBinding::bind)
     private val postsViewModel: PostsViewModel by viewModel()
-    private var postListAdapter: PostListAdapter = PostListAdapter()
+    private val postListAdapter: PostListAdapter = PostListAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +32,7 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
         observeEvents()
         binding.postsRecyclerView.adapter = postListAdapter
 
-        collectFlow(postsViewModel.mapState { it.filteredListOfPostEntities }) {
+        collectFlow(postsViewModel.mapState { it.postAndAdList }) {
             postListAdapter.submitList(it)
         }
         collectFlow(postsViewModel.mapState { it.isLoading }) {
@@ -51,7 +50,7 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
         postListAdapter.onPostClicked = {
             postsViewModel.sendIntent(PostsViewModel.Intent.PostClicked(it))
         }
-        postListAdapter.onFavouriteButtonClicked = {
+        postListAdapter.onPostFavouriteButtonClicked = {
             postsViewModel.sendIntent(PostsViewModel.Intent.FavouriteButtonClicked(it))
         }
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
@@ -66,7 +65,7 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val currentPost = postListAdapter.currentList[viewHolder.absoluteAdapterPosition]
-                postsViewModel.sendIntent(PostsViewModel.Intent.FavouriteButtonClicked(currentPost))
+                //postsViewModel.sendIntent(PostsViewModel.Intent.FavouriteButtonClicked(currentPost))
             }
         })
         itemTouchHelper.attachToRecyclerView(binding.postsRecyclerView)

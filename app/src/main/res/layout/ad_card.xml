@@ -12,36 +12,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/card_background"
+        android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical"
         android:padding="10.dp">
 
-        <ImageView
-            android:id="@+id/favouriteButton"
-            android:layout_width="50.dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10.dp"
-            android:layout_marginTop="10.dp"
-            android:minHeight="50.dp"
-            android:src="@drawable/baseline_favorite_border_24" />
-
         <TextView
-            android:id="@+id/postTitle"
+            android:id="@+id/adTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:textColor="@drawable/text_color"
-            android:textSize="26.sp"
+            android:textSize="21.sp"
             android:textStyle="bold"
             tools:text="magnam facilis autem" />
 
         <TextView
-            android:id="@+id/postMainText"
+            android:id="@+id/adMainText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20.dp"
+            android:layout_marginTop="10.dp"
             android:textColor="@drawable/text_color"
-            android:textSize="18.sp"
-            android:textStyle="normal"
+            android:textSize="18sp"
             tools:text="magnam facilis autdsjgsj gdsklgjsdagha shgjsajgjahsghkasjgjsakghasgjjklasgjlsdgsdgsgjskjgsdgsgdgsdsgem" />
 
     </LinearLayout>

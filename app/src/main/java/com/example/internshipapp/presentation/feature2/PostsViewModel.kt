@@ -3,6 +3,7 @@ package com.example.internshipapp.presentation.feature2
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.internshipapp.domain.additionalEntitues.AdEntity
 import com.example.internshipapp.domain.entities.LoadingException
 import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.entities.TResult
@@ -12,6 +13,7 @@ import com.example.internshipapp.domain.usecases.GetFavouritePostsUseCase
 import com.example.internshipapp.domain.usecases.GetPostsFromNetworkUseCase
 import com.example.internshipapp.myLog
 import com.example.internshipapp.presentation.SingleFlowEvent
+import com.example.internshipapp.presentation.postsInXML.posts.IPostsAndAdUiModels
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -38,6 +40,7 @@ class PostsViewModel(
     data class State(
         val filterText: String = "",
         val favouritePosts: List<PostEntity> = listOf(),
+        val postAndAdList: List<IPostsAndAdUiModels> = listOf(),
         val loadedPostsListFromNetwork: List<PostEntity> = listOf(),
         val isLoading: Boolean = false,
     ) {
@@ -89,8 +92,24 @@ class PostsViewModel(
                 )
 
                 is TResult.Success -> {
+                    val postWithAdList = tPostResult.data.map {
+                        if (it.id % 2 == 0) {
+                            IPostsAndAdUiModels.AdsUiModel(
+                                ad = AdEntity(
+                                    id = it.id.toString(),
+                                    title = "Title ${it.id}",
+                                    mainText = "MainText ${it.id}"
+                                )
+                            )
+                        } else {
+                            IPostsAndAdUiModels.PostsUiModel(
+                                post = it
+                            )
+                        }
+                    }
                     _state.update {
                         it.copy(
+                            postAndAdList = postWithAdList,
                             loadedPostsListFromNetwork = tPostResult.data,
                             isLoading = false
                         )

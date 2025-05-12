@@ -11,4 +11,5 @@
     <color name="onPostColorContent">#000000</color>
     <color name="postColor">#FFFFFF</color>
     <color name="commentColor">#FF1A4876</color>
+    <color name="adColor">#FF973546</color>
 </resources>

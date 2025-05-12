@@ -28,7 +28,7 @@ class PostDetailsInfoFragment : Fragment(R.layout.fragment_post_details_info) {
         FragmentPostDetailsInfoBinding::bind
     )
 
-    private var commentsListAdapter: CommentListAdapter = CommentListAdapter()
+    private val commentsListAdapter: CommentListAdapter = CommentListAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
