@@ -24,7 +24,7 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
 
     private val binding: FragmentPostsBinding by viewBinding(FragmentPostsBinding::bind)
     private val postsViewModel: PostsViewModel by viewModel()
-    private val postListAdapter: PostListAdapter = PostListAdapter()
+    private val postListAdapter: BaseAdapter = BaseAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +33,26 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
         binding.postsRecyclerView.adapter = postListAdapter
 
         collectFlow(postsViewModel.mapState { it.postAndAdList }) {
-            postListAdapter.submitList(it)
+            val adapterList = it.map { postAndListUiModel ->
+                when (postAndListUiModel) {
+                    is IPostsAndAdUiModels.AdsUiModel -> AdAdapterItem(postAndListUiModel)
+                    is IPostsAndAdUiModels.PostsUiModel -> {
+                        PostAdapterItem(
+                            postAndListUiModel,
+                            onCLik = {post->
+                                 postsViewModel.sendIntent(PostsViewModel.Intent.PostClicked(post))
+                            },
+                            onFavouriteClicked = {post->
+                                postsViewModel.sendIntent(PostsViewModel.Intent.FavouriteButtonClicked(post))
+                            }
+                        )
+                    }
+                }
+
+            }
+            if (adapterList.isNotEmpty()) {
+                postListAdapter.submitList(adapterList)
+            }
         }
         collectFlow(postsViewModel.mapState { it.isLoading }) {
             if (it) {
@@ -47,12 +66,7 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
     }
 
     private fun addListeners() {
-        postListAdapter.onPostClicked = {
-            postsViewModel.sendIntent(PostsViewModel.Intent.PostClicked(it))
-        }
-        postListAdapter.onPostFavouriteButtonClicked = {
-            postsViewModel.sendIntent(PostsViewModel.Intent.FavouriteButtonClicked(it))
-        }
+
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT
@@ -106,8 +120,4 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
         }
     }
 
-    override fun onDestroyView() {
-        binding.postsRecyclerView.adapter = null
-        super.onDestroyView()
-    }
 }

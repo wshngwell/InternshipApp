@@ -40,7 +40,7 @@
             android:padding="10dp"
             android:textColor="@color/myBackground" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.example.internshipapp.presentation.postsInXML.posts.BaseRecyclerView
             android:id="@+id/postsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
