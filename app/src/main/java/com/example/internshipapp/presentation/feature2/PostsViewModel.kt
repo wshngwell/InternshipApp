@@ -39,10 +39,12 @@ class PostsViewModel(
 
     data class State(
         val filterText: String = "",
+        val postEditText: String = "",
         val favouritePosts: List<PostEntity> = listOf(),
         val postAndAdList: List<IPostsAndAdUiModels> = listOf(),
         val loadedPostsListFromNetwork: List<PostEntity> = listOf(),
         val isLoading: Boolean = false,
+        val postEditingId: Int? = null
     ) {
         val filteredListOfPostEntities: List<PostEntity> =
             (favouritePosts + loadedPostsListFromNetwork)
@@ -125,10 +127,21 @@ class PostsViewModel(
         data class OnPostFilterTextChanged(val text: String) : Intent
         data class PostClicked(val postEntity: PostEntity) : Intent
         data class FavouriteButtonClicked(val postEntity: PostEntity) : Intent
+        data class IdOfChangingPost(val postId: Int?) : Intent
+        data class ChangePostEditText(val text: String) : Intent
+        data class OnAddCardTextChanged(
+            val addId: String,
+            val addCardText: String
+        ) : Intent
+
+        data class OnPostCardTextChanged(
+            val postId: Int,
+            val postCardText: String
+        ) : Intent
     }
 
     fun sendIntent(intent: Intent) {
-        myLog("HFGHJLKJKHGJ")
+
         when (intent) {
             is Intent.OnPostFilterTextChanged -> {
                 _state.update { it.copy(filterText = intent.text) }
@@ -152,6 +165,53 @@ class PostsViewModel(
                     }
                     _state.update { it.copy(loadedPostsListFromNetwork = newLoadedList) }
                 }
+            }
+
+            is Intent.OnAddCardTextChanged -> {
+
+                _state.update {
+                    it.copy(
+                        postAndAdList = state.value.postAndAdList
+                            .toMutableList().apply {
+                                replaceAll {
+                                    if (it is IPostsAndAdUiModels.AdsUiModel && it.ad.id == intent.addId) {
+                                        it.copy(ad = it.ad.copy(title = intent.addCardText))
+                                    } else it
+                                }
+
+                            }
+                    )
+
+
+                }
+            }
+
+
+            is Intent.IdOfChangingPost -> {
+
+                _state.update { it.copy(postEditingId = intent.postId) }
+            }
+
+            is Intent.OnPostCardTextChanged -> {
+                _state.update {
+                    it.copy(
+                        postAndAdList = state.value.postAndAdList
+                            .toMutableList().apply {
+                                replaceAll {
+                                    if (it is IPostsAndAdUiModels.PostsUiModel && it.post.id == intent.postId) {
+                                        it.copy(post = it.post.copy(title = intent.postCardText))
+                                    } else it
+                                }
+
+                            }
+                    )
+                }
+            }
+
+            is Intent.ChangePostEditText -> _state.update {
+                it.copy(
+                    postEditText = intent.text
+                )
             }
         }
     }

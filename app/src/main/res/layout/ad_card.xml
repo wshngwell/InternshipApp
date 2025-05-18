@@ -35,6 +35,14 @@
             android:textSize="18sp"
             tools:text="magnam facilis autdsjgsj gdsklgjsdagha shgjsajgjahsghkasjgjsakghasgjjklasgjlsdgsdgsgjskjgsdgsgdgsdsgem" />
 
+        <EditText
+            android:id="@+id/addEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="new PostTitle"
+            android:saveEnabled="false"
+            android:textColor="@drawable/text_color"
+            android:textColorHint="@drawable/text_color" />
     </LinearLayout>
 
 

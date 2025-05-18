@@ -8,7 +8,8 @@ import com.example.internshipapp.domain.entities.PostEntity
 data class PostAdapterItem(
     private val postUiModel: IPostsAndAdUiModels.PostsUiModel,
     private val onCLik: (PostEntity) -> Unit,
-    private val onFavouriteClicked: (PostEntity) -> Unit
+    private val onFavouriteClicked: (PostEntity) -> Unit,
+    private val makeDialogVisible: (Int) -> Unit
 ) : BaseItem {
 
     override fun getItemViewType(): Int = R.layout.post_item
@@ -32,6 +33,9 @@ data class PostAdapterItem(
             }
             binding.favouriteButton.setOnClickListener {
                 onFavouriteClicked(postUiModel.post)
+            }
+            binding.changeTitlePostButton.setOnClickListener {
+                makeDialogVisible(postUiModel.post.id)
             }
         }
     }

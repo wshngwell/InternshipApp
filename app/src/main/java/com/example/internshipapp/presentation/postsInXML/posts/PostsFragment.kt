@@ -3,14 +3,19 @@ package com.example.internshipapp.presentation.postsInXML.posts
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.internshipapp.R
+import com.example.internshipapp.databinding.AlertDialogPostBinding
 import com.example.internshipapp.databinding.FragmentPostsBinding
 import com.example.internshipapp.presentation.feature2.PostsViewModel
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
@@ -23,6 +28,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class PostsFragment : Fragment(R.layout.fragment_posts) {
 
     private val binding: FragmentPostsBinding by viewBinding(FragmentPostsBinding::bind)
+
     private val postsViewModel: PostsViewModel by viewModel()
     private val postListAdapter: BaseAdapter = BaseAdapter()
 
@@ -32,19 +38,51 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
         observeEvents()
         binding.postsRecyclerView.adapter = postListAdapter
 
+        collectFlow(postsViewModel.mapState { it.postEditingId }) {
+            Log.e("PostAdapterItem", "$it")
+            it?.let {
+                showAlertDialog(it)
+            }
+        }
+
+        val cursorMap = mutableMapOf<String, Int>()
         collectFlow(postsViewModel.mapState { it.postAndAdList }) {
             val adapterList = it.map { postAndListUiModel ->
                 when (postAndListUiModel) {
-                    is IPostsAndAdUiModels.AdsUiModel -> AdAdapterItem(postAndListUiModel)
+                    is IPostsAndAdUiModels.AdsUiModel -> AdAdapterItem(
+                        postAndListUiModel,
+                        cursorMap[postAndListUiModel.ad.id] ?: 0
+                    ) { text, cursor ->
+                        cursorMap[postAndListUiModel.ad.id] = cursor
+                        postsViewModel.sendIntent(
+                            PostsViewModel.Intent.OnAddCardTextChanged(
+                                postAndListUiModel.ad.id,
+                                text
+                            )
+                        )
+                    }
+
                     is IPostsAndAdUiModels.PostsUiModel -> {
                         PostAdapterItem(
                             postAndListUiModel,
-                            onCLik = {post->
-                                 postsViewModel.sendIntent(PostsViewModel.Intent.PostClicked(post))
+                            onCLik = { post ->
+                                postsViewModel.sendIntent(PostsViewModel.Intent.PostClicked(post))
                             },
-                            onFavouriteClicked = {post->
-                                postsViewModel.sendIntent(PostsViewModel.Intent.FavouriteButtonClicked(post))
+                            onFavouriteClicked = { post ->
+                                postsViewModel.sendIntent(
+                                    PostsViewModel.Intent.FavouriteButtonClicked(
+                                        post
+                                    )
+                                )
+                            },
+                            makeDialogVisible = {
+                                postsViewModel.sendIntent(
+                                    PostsViewModel.Intent.IdOfChangingPost(
+                                        it
+                                    )
+                                )
                             }
+
                         )
                     }
                 }
@@ -64,6 +102,41 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
             }
         }
     }
+
+    private fun showAlertDialog(changingPostId: Int) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_post, null)
+        val alertDialogPostBinding = AlertDialogPostBinding.bind(dialogView)
+
+        alertDialogPostBinding.changePostTitleEditText.setText(postsViewModel.state.value.postEditText)
+
+        alertDialogPostBinding.changePostTitleEditText.doAfterTextChanged {
+            postsViewModel.sendIntent(PostsViewModel.Intent.ChangePostEditText(it.toString()))
+        }
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setOnDismissListener {
+                postsViewModel.sendIntent(PostsViewModel.Intent.IdOfChangingPost(null))
+            }
+            .setOnCancelListener {
+                postsViewModel.sendIntent(PostsViewModel.Intent.IdOfChangingPost(null))
+            }
+            .setCancelable(true)
+            .create()
+
+
+        alertDialogPostBinding.changeTitlePostButton.setOnClickListener {
+            postsViewModel.sendIntent(
+                PostsViewModel.Intent.OnPostCardTextChanged(
+                    changingPostId,
+                    alertDialogPostBinding.changePostTitleEditText.text.toString()
+                )
+            )
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
+    }
+
 
     private fun addListeners() {
 

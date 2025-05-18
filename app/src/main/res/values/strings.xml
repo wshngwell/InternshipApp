@@ -12,4 +12,6 @@
     <string name="comments">Comments</string>
     <string name="post">Post</string>
     <string name="leak_canary_test_class_name">assertk.Assert</string>
+    <string name="changeTitlePost">Изменить title поста</string>
+    <string name="submit">Применить</string>
 </resources>
