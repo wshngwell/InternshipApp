@@ -1,9 +1,11 @@
 package com.example.internshipapp.presentation.postsInXML.comments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.internshipapp.R
@@ -34,9 +36,6 @@ class PostDetailsInfoFragment : Fragment(R.layout.fragment_post_details_info) {
         super.onViewCreated(view, savedInstanceState)
         binding.commentsRecyclerView.adapter = commentsListAdapter
         observeEvents()
-        binding.postCard.favouriteButton.setOnClickListener {
-            viewModel.sendIntent(PostWithCommentsViewModel.Intent.OnFavouriteClicked(viewModel.state.value.postEntity))
-        }
         collectFlow(viewModel.mapState { it.isLoading }) {
             if (it) {
                 binding.linearLayoutWithCommentsProgressBar.isVisible = true
@@ -48,15 +47,24 @@ class PostDetailsInfoFragment : Fragment(R.layout.fragment_post_details_info) {
         }
         collectFlow(viewModel.mapState { it.postEntity }) {
             with(binding) {
-                if (viewModel.state.value.postEntity.isFavourite) {
-                    postCard.favouriteButton.setImageResource(R.drawable.baseline_favorite_24)
-                } else {
-                    postCard.favouriteButton.setImageResource(R.drawable.baseline_favorite_border_24)
+                customView.title = viewModel.state.value.postEntity.title
+                customView.description = viewModel.state.value.postEntity.body
+                customView.buttonVisibility = true
+                customView.actionButtonView.setOnClickListener {
+                    Log.e("PostDetailsInfoFragment", "CLICKED")
                 }
-                postCard.postTitle.text = viewModel.state.value.postEntity.title
-                postCard.postMainText.text = viewModel.state.value.postEntity.body
+
+                customView.inputEditTextView.doAfterTextChanged {
+                    viewModel.sendIntent(PostWithCommentsViewModel.Intent.TypedText(it.toString()))
+                }
             }
         }
+
+        collectFlow(viewModel.mapState { it.typedText }) {
+            binding.customView.enteredText = it
+        }
+
+
         collectFlow(viewModel.mapState { it.commentsList }) {
             commentsListAdapter.submitList(it)
         }

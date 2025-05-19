@@ -27,6 +27,7 @@ class PostWithCommentsViewModel(
 ) : ViewModel() {
 
     data class State(
+        val typedText: String = "",
         val commentsList: List<CommentEntity> = listOf(),
         val postEntity: PostEntity,
         val favouritePosts: List<PostEntity> = listOf(),
@@ -46,6 +47,7 @@ class PostWithCommentsViewModel(
 
     sealed interface Intent {
         data class OnFavouriteClicked(val postEntity: PostEntity) : Intent
+        data class TypedText(val text: String) : Intent
     }
 
     private val _event = SingleFlowEvent<Event>(viewModelScope)
@@ -95,6 +97,10 @@ class PostWithCommentsViewModel(
                         _state.update { it.copy(postEntity = it.postEntity.copy(isFavourite = true)) }
                     }
                 }
+            }
+
+            is Intent.TypedText -> {
+                _state.update { it.copy(typedText = intent.text) }
             }
         }
     }

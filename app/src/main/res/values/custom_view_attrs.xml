@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="CustomViewStyle" format="reference" />
+
+    <declare-styleable name="CustomView">
+        <attr name="title" format="string" />
+        <attr name="titleColor" format="reference" />
+        <attr name="description" format="string" />
+        <attr name="descriptionColor" format="reference" />
+        <attr name="buttonVisibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+        </attr>
+        <attr name="enteredText" format="string" />
+    </declare-styleable>
+
+    <style name="CustomViewDefaultStyle">
+        <item name="title">My Title</item>
+        <item name="titleColor">@color/black</item>
+        <item name="description">Description</item>
+        <item name="descriptionColor">@color/black</item>
+        <item name="buttonVisibility">visible</item>
+    </style>
+</resources>

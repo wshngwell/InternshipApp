@@ -33,9 +33,12 @@
         android:textSize="26.sp"
         android:textStyle="bold" />
 
-    <include
-        android:id="@+id/postCard"
-        layout="@layout/post_item" />
+    <com.example.internshipapp.presentation.postsInXML.CustomView
+        android:id="@+id/customView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:descriptionColor="@color/adColor"
+        app:titleColor="@color/adColor" />
 
     <LinearLayout
         android:id="@+id/linearLayoutCommentsScreen"
