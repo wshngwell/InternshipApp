@@ -1,12 +1,15 @@
 package com.example.internshipapp.presentation.postsInXML.comments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.internshipapp.R
 import com.example.internshipapp.databinding.FragmentPostDetailsInfoBinding
@@ -30,6 +33,7 @@ class PostDetailsInfoFragment : Fragment(R.layout.fragment_post_details_info) {
         FragmentPostDetailsInfoBinding::bind
     )
 
+
     private val commentsListAdapter: CommentListAdapter = CommentListAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,21 +49,29 @@ class PostDetailsInfoFragment : Fragment(R.layout.fragment_post_details_info) {
                 binding.linearLayoutWithCommentsProgressBar.isVisible = false
             }
         }
-        collectFlow(viewModel.mapState { it.postEntity }) {
-            with(binding) {
-                customView.title = viewModel.state.value.postEntity.title
-                customView.description = viewModel.state.value.postEntity.body
-                customView.buttonVisibility = true
-                customView.actionButtonView.setOnClickListener {
-                    Log.e("PostDetailsInfoFragment", "CLICKED")
-                }
-
-                customView.inputEditTextView.doAfterTextChanged {
-                    viewModel.sendIntent(PostWithCommentsViewModel.Intent.TypedText(it.toString()))
-                }
+        val callback = object : OnBackPressedCallback(true) {
+            @SuppressLint("RestrictedApi")
+            override fun handleOnBackPressed() {
+                Log.e("НАЗАД", "Клик на стрелку назад")
+                findNavController().popBackStack()
             }
         }
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
 
+
+        collectFlow(viewModel.mapState { it.postEntity }) {
+            with(binding) {
+                customView.title = it.title
+                customView.description = it.body
+            }
+        }
+        binding.customView.actionButtonView.setOnClickListener {
+            Log.e("PostDetailsInfoFragment", "CLICKED")
+        }
+
+        binding.customView.inputEditTextView.doAfterTextChanged {
+            viewModel.sendIntent(PostWithCommentsViewModel.Intent.TypedText(it.toString()))
+        }
         collectFlow(viewModel.mapState { it.typedText }) {
             binding.customView.enteredText = it
         }
