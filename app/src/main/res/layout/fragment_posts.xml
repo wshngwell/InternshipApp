@@ -28,17 +28,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/searchPostsEditText"
+        <!--  <EditText
+              android:id="@+id/searchPostsEditText"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="20.dp"
+              android:layout_marginTop="10.dp"
+              android:layout_marginEnd="20.dp"
+              android:background="@color/postColor"
+              android:maxHeight="100dp"
+              android:padding="10dp"
+              android:textColor="@color/myBackground" />-->
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/composeTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20.dp"
-            android:layout_marginTop="10.dp"
-            android:layout_marginEnd="20.dp"
-            android:background="@color/postColor"
-            android:maxHeight="100dp"
-            android:padding="10dp"
-            android:textColor="@color/myBackground" />
+            android:layout_margin="16dp" />
 
         <com.example.internshipapp.presentation.postsInXML.posts.BaseRecyclerView
             android:id="@+id/postsRecyclerView"

@@ -1,8 +1,7 @@
 package com.example.internshipapp.presentation.postsInXML.posts
 
+import CustomTextField
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,11 +10,17 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +29,7 @@ import com.example.internshipapp.R
 import com.example.internshipapp.databinding.AlertDialogPostBinding
 import com.example.internshipapp.databinding.FragmentPostsBinding
 import com.example.internshipapp.presentation.feature2.PostsViewModel
+import com.example.internshipapp.presentation.feature2.PostsViewModel.Intent
 import com.example.internshipapp.presentation.parseLoadingExceptionToStringResource
 import com.example.internshipapp.presentation.postsInXML.NavigationInstance.Companion.myNavigate
 import com.example.internshipapp.presentation.postsInXML.collectFlow
@@ -59,6 +65,24 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
+
+        binding.composeTextField.setContent {
+
+            val state by postsViewModel.state.collectAsStateWithLifecycle()
+            val intent: (Intent) -> Unit by remember {
+                mutableStateOf(postsViewModel::sendIntent)
+            }
+            CustomTextField(
+                onFilterText = {
+                    postsViewModel.sendIntent(Intent.OnPostFilterTextChanged(state.filterText))
+                },
+                onValueChange = {
+                    intent(Intent.OnPostFilterTextChanged(it))
+                },
+                modifier = Modifier.fillMaxWidth(),
+                value = state.filterText
+            )
+        }
         addListeners()
         observeEvents()
         binding.postsRecyclerView.adapter = postListAdapter
@@ -175,26 +199,27 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
             ): Boolean = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val currentPost = postListAdapter.currentList[viewHolder.absoluteAdapterPosition]
+                val currentPost =
+                    postListAdapter.currentList[viewHolder.absoluteAdapterPosition]
                 //postsViewModel.sendIntent(PostsViewModel.Intent.FavouriteButtonClicked(currentPost))
             }
         })
         itemTouchHelper.attachToRecyclerView(binding.postsRecyclerView)
-        binding.searchPostsEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                text: CharSequence?,
-                p1: Int,
-                p2: Int,
-                p3: Int
-            ) {
-            }
+        /* binding.searchPostsEditText.addTextChangedListener(object : TextWatcher {
+             override fun beforeTextChanged(
+                 text: CharSequence?,
+                 p1: Int,
+                 p2: Int,
+                 p3: Int
+             ) {
+             }
 
-            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                postsViewModel.sendIntent(PostsViewModel.Intent.OnPostFilterTextChanged(text.toString()))
-            }
+             override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 postsViewModel.sendIntent(PostsViewModel.Intent.OnPostFilterTextChanged(text.toString()))
+             }
 
-            override fun afterTextChanged(text: Editable?) {}
-        })
+             override fun afterTextChanged(text: Editable?) {}
+         })*/
     }
 
     private fun observeEvents() {

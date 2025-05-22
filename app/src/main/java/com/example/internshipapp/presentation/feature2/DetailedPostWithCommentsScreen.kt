@@ -34,7 +34,6 @@ import com.example.internshipapp.ui.theme.myBackground
 import com.google.gson.Gson
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.androidx.compose.koinViewModel
@@ -44,7 +43,6 @@ import org.koin.core.parameter.parametersOf
 @Destination
 @Composable
 fun DetailedPostWithCommentsScreen(
-    navigator: DestinationsNavigator,
     postEntityGson: String
 ) {
 
