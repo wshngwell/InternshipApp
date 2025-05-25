@@ -22,6 +22,7 @@ fun PostEntity.toPostDbModel() =
         userId = userId,
         timeOfInsertion = System.currentTimeMillis()
     )
+
 fun PostsAnswerItemDto.toPostEntity() = kotlin.runCatching {
     PostEntity(
         body = body!!,
@@ -34,4 +35,4 @@ fun PostsAnswerItemDto.toPostEntity() = kotlin.runCatching {
     null
 }
 
-fun List<PostsAnswerItemDto>.mapListOfPostsDtoToListOfPosts() = mapNotNull { it.toPostEntity() }
+//fun List<PostEntity>.mapListOfPostsDtoToListOfPosts() = mapNotNull { it.toPostEntity() }

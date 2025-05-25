@@ -14,6 +14,9 @@ import com.example.internshipapp.domain.usecases.GetPostsFromNetworkUseCase
 import com.example.internshipapp.myLog
 import com.example.internshipapp.presentation.SingleFlowEvent
 import com.example.internshipapp.presentation.postsInXML.posts.IPostsAndAdUiModels
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -36,6 +39,7 @@ class PostsViewModel(
     private val _event = SingleFlowEvent<Event>(viewModelScope)
     val event = _event.flow
 
+    private val postDisposable = CompositeDisposable()
 
     data class State(
         val filterText: String = "",
@@ -87,37 +91,42 @@ class PostsViewModel(
     init {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            val tPostResult = getPostsFromNetworkUseCase()
-            when (tPostResult) {
-                is TResult.Error -> _event.emit(
-                    Event.Error(exception = tPostResult.exception)
-                )
+            val disposable = getPostsFromNetworkUseCase()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { tPostResult ->
+                    when (tPostResult) {
+                        is TResult.Error -> _event.emit(
+                            Event.Error(exception = tPostResult.exception)
+                        )
 
-                is TResult.Success -> {
-                    val postWithAdList = tPostResult.data.map {
-                        if (it.id % 2 == 0) {
-                            IPostsAndAdUiModels.AdsUiModel(
-                                ad = AdEntity(
-                                    id = it.id.toString(),
-                                    title = "Title ${it.id}",
-                                    mainText = "MainText ${it.id}"
+                        is TResult.Success -> {
+                            val postWithAdList = tPostResult.data.map {
+                                if (it.id % 2 == 0) {
+                                    IPostsAndAdUiModels.AdsUiModel(
+                                        ad = AdEntity(
+                                            id = it.id.toString(),
+                                            title = "Title ${it.id}",
+                                            mainText = "MainText ${it.id}"
+                                        )
+                                    )
+                                } else {
+                                    IPostsAndAdUiModels.PostsUiModel(
+                                        post = it
+                                    )
+                                }
+                            }
+                            _state.update {
+                                it.copy(
+                                    postAndAdList = postWithAdList,
+                                    loadedPostsListFromNetwork = tPostResult.data,
+                                    isLoading = false
                                 )
-                            )
-                        } else {
-                            IPostsAndAdUiModels.PostsUiModel(
-                                post = it
-                            )
+                            }
                         }
                     }
-                    _state.update {
-                        it.copy(
-                            postAndAdList = postWithAdList,
-                            loadedPostsListFromNetwork = tPostResult.data,
-                            isLoading = false
-                        )
-                    }
                 }
-            }
+            postDisposable.add(disposable)
             _state.update { it.copy(isLoading = false) }
         }
 
@@ -214,5 +223,10 @@ class PostsViewModel(
                 )
             }
         }
+    }
+
+    override fun onCleared() {
+        postDisposable.dispose()
+        super.onCleared()
     }
 }

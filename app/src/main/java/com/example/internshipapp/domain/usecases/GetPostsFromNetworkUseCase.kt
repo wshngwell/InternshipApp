@@ -5,31 +5,26 @@ import com.example.internshipapp.domain.entities.PostEntity
 import com.example.internshipapp.domain.entities.TResult
 import com.example.internshipapp.domain.repositories.ILocalPostRepository
 import com.example.internshipapp.domain.repositories.IPostAndCommentsRemoteRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.withContext
+import io.reactivex.rxjava3.core.Single
 
 class GetPostsFromNetworkUseCase(
     private val localRep: ILocalPostRepository,
     private val remoteRep: IPostAndCommentsRemoteRepository
 ) {
-    suspend operator fun invoke(): TResult<List<PostEntity>, LoadingException> =
-        withContext(Dispatchers.IO) {
-            return@withContext when (val postsFromNetwork = remoteRep.getPostsFromNetwork()) {
-                is TResult.Error -> postsFromNetwork
-                is TResult.Success -> {
-                    val favoriteLisPostsIDS =
-                        localRep.postsFromDb.firstOrNull().orEmpty().map { it.id }
+    operator fun invoke(): Single<TResult<List<PostEntity>, LoadingException>> =
+        remoteRep.getPostsFromNetwork()
+    /*when (it) {
+        is TResult.Error -> it
+        is TResult.Success -> {
+            val favoriteLisPostsIDS =
+                localRep.postsFromDb.firstOrNull().orEmpty().map { it.id }
 
-                    val newResult = postsFromNetwork.data.map { postFromNetwork ->
-                        postFromNetwork.copy(
-                            isFavourite = favoriteLisPostsIDS.contains(postFromNetwork.id)
-                        )
-                    }
-                    TResult.Success(newResult)
-                }
+            val newResult = postsFromNetwork.data.map { postFromNetwork ->
+                postFromNetwork.copy(
+                    isFavourite = favoriteLisPostsIDS.contains(postFromNetwork.id)
+                )
             }
-
-
+            TResult.Success(newResult)
         }
+    }*/
 }
